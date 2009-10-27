@@ -1,6 +1,6 @@
 /*
     main.m
-    InternodeUsage
+    InternetUsage
     
     Copyright (c) 2009, Shane Ambler
     All rights reserved.
