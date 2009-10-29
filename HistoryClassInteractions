@@ -1,0 +1,8 @@
+
+
+ASHistoryDay - The usage for a day. The date and the data transfered
+
+ASHistoryPeriod - The usage for a given period (usually a calendar month). An array of ASHistoryDay objects as well as cached total and average use for the period. The key method returns yyyymm as an NSString, giving a unique id for each period.
+
+ASHistory - All usage known. An array of ASHistoryPeriod objects as well as a cache of number of periods and days known.
+

@@ -1,5 +1,5 @@
 /*
-    InternetUsage_Prefix.pch
+    ASHistory.h
     InternetUsage
     
     Copyright (c) 2009, Shane Ambler
@@ -30,17 +30,19 @@
 /*
 ******************************************************************************
     Change History :-
-    25/10/2009 - Created by Shane Ambler
+    30/10/2009 - Created by Shane Ambler
     
 */
-//
-// Prefix header for all source files of the 'InternetUsage' target in the 'InternetUsage' project
-//
-
-#ifdef __OBJC__
-    #import <Cocoa/Cocoa.h>
-#endif
 
 
-#define VERS "v0.1"
 
+@interface ASHistory : NSObject {
+    NSMutableDictionary *mHistoryPeriods;
+    int mKnownPeriods;
+    int mKnownDays;
+    
+}
+
+
+
+@end

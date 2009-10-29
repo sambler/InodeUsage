@@ -1,5 +1,19 @@
 {
     IBClasses = (
+        {
+            ACTIONS = {
+                changeHistory = id; 
+                changeStartup = id; 
+                changeUpdate = id; 
+                ruleAdd = id; 
+                ruleRemove = id; 
+                update = id; 
+            }; 
+            CLASS = ASInetUsageController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {oLoginID = NSTextField; oLoginPasswd = NSTextField; }; 
+            SUPERCLASS = NSObject; 
+        }, 
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {CLASS = NSLevelIndicator; LANGUAGE = ObjC; SUPERCLASS = NSControl; }
     ); 

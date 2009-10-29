@@ -1,5 +1,5 @@
 /*
-    InternetUsage_Prefix.pch
+    ASHistoryDay.m
     InternetUsage
     
     Copyright (c) 2009, Shane Ambler
@@ -30,17 +30,45 @@
 /*
 ******************************************************************************
     Change History :-
-    25/10/2009 - Created by Shane Ambler
+    30/10/2009 - Created by Shane Ambler
     
 */
-//
-// Prefix header for all source files of the 'InternetUsage' target in the 'InternetUsage' project
-//
 
-#ifdef __OBJC__
-    #import <Cocoa/Cocoa.h>
-#endif
+#import "ASHistoryDay.h"
 
 
-#define VERS "v0.1"
+@implementation ASHistoryDay
 
++(ASHistoryDay*)historyWith:(NSDate*)day :(float)usage
+{
+    ASHistoryDay *newDay = [[self alloc] init];
+    newDay->mDay = [day retain];
+    newDay->mUsage = usage;
+    return newDay;
+}
+
++(ASHistoryDay*)historyFrom:(NSString*)dayStr :(NSString*)usageStr
+{
+    // dayStr is a six digit representation of the date (yymmdd)
+    // break up each piece to get the values for the date -- yy<90 = 2000+
+    
+    return [ASHistoryDay historyWith:[NSDate initWithString:dayStr] :[usageStr floatValue]];
+}
+
+-(NSDate*)day
+{
+    return mDay;
+}
+
+-(float)usage
+{
+    return mUsage;
+}
+
+-(void) dealloc
+{
+    [mDay release];
+    [super dealloc];
+}
+
+@end
