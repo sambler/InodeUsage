@@ -55,5 +55,8 @@
 -(float)averageUsage;
 -(int)daysInPeriod;
 
+-(ASHistoryDay*)historyForDay:(NSCalendarDate*)day;
+
+
 
 @end

@@ -83,8 +83,27 @@
 
 -(int)daysInPeriod
 {
+    // should we calc this from start date or just rely on history entries??
     return [mDaysInPeriod count];
 }
+
+-(ASHistoryDay*)historyForDay:(NSCalendarDate*)day
+{
+    ASHistoryDay *theDayData;
+    int daysDifference;
+    unsigned int x;
+    
+    for (x=0; x<[mDaysInPeriod count]; x++)
+    {
+	theDayData = [mDaysInPeriod objectAtIndex:x];
+	[[theDayData day] years:nil months:nil days:&daysDifference hours:nil minutes:nil seconds:nil sinceDate:day];
+	if( daysDifference == 0 )
+	    return theDayData;
+    }
+    
+    return nil;
+}
+
 
 
 @end

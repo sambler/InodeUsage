@@ -34,6 +34,8 @@
     
 */
 
+#import "ASHistoryDay.h"
+#import "ASHistoryPeriod.h"
 
 
 @interface ASHistory : NSObject {
@@ -50,6 +52,9 @@
 
 -(void)addDay:(NSString*)day;
 -(void)addHistory:(NSString*)history;
+
+-(ASHistoryDay*)historyForDay:(NSCalendarDate*)day;
+-(ASHistoryPeriod*)historyForPeriod:(NSString*)period;
 
 
 

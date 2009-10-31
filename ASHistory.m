@@ -77,8 +77,6 @@
 	[mHistoryPeriods setObject:pHist forKey:[pHist key]];
     }
     
-    //[dayHistory release];
-    //[pHist release];
 }
 
 -(void)addHistory:(NSString*)history
@@ -96,9 +94,31 @@
 	[history getLineStart:&lineStart end:&lineEnd contentsEnd:&contEnd forRange:NSMakeRange(lineTarget,2)];
 	theLine = [history substringWithRange:NSMakeRange(lineStart,lineEnd-lineStart)];
 	[self addDay:theLine];
-	//[theLine release];
 	lineTarget = lineStart - 5;
     }
+}
+
+-(ASHistoryDay*)historyForDay:(NSCalendarDate*)day
+{
+    NSString *periodKey = [day descriptionWithCalendarFormat:@"%Y%m"];
+    ASHistoryPeriod *periodData = [self historyForPeriod:periodKey];
+    ASHistoryDay *theDay;
+    
+    theDay = [periodData historyForDay:day];
+    if( theDay == nil )
+    {
+	// didn't get day so try previous period
+	// the data for a day is either in the period of the same month or the one before
+	periodKey = [NSString stringWithFormat:@"%i",[periodKey intValue]-1];
+	periodData = [self historyForPeriod:periodKey];
+	theDay = [periodData historyForDay:day];
+    }
+    return theDay;
+}
+
+-(ASHistoryPeriod*)historyForPeriod:(NSString*)period
+{
+    return [mHistoryPeriods objectForKey:period];
 }
 
 

@@ -55,6 +55,7 @@
     // break up each piece to get the values for the date -- yy<90 = 2000+
     // not likely we will get history before 2000 - but we should handle any possibility
     // timestamp of 1 sec before midnight and adelaide's CST timezone - +0930
+    // Should probably stay at CST to match Internodes server times??
     
     if([[dayStr substringWithRange:NSMakeRange(0,2)]intValue] < 90)
     {
@@ -64,13 +65,15 @@
     }
     
     calDate = [NSCalendarDate dateWithString:frmtDate calendarFormat:@"%Y-%m-%d %H:%M:%S %z"];
-    //[frmtDate autorelease];
+    
     return [ASHistoryDay historyWith:calDate :[usageStr floatValue]];
-//    return [ASHistoryDay historyWith:[NSCalendarDate initWithString:frmtDate] :[usageStr floatValue]];
 }
 
 -(NSString*)periodKey:(int)periodStartDay
 {
+    // period key is defined as a six digits
+    // 4 for year - 2 for month -- determined from the first day of the period
+    
     int dayOfHistory = [[mDay descriptionWithCalendarFormat:@"%d"]intValue];
     NSString *tmpKey;
     
@@ -79,7 +82,6 @@
     else{
 	tmpKey = [NSString stringWithFormat:@"%@%i",[mDay descriptionWithCalendarFormat:@"%Y"],[[mDay descriptionWithCalendarFormat:@"%m"]intValue]-1];
     }
-    //[tmpKey autorelease];
     return tmpKey;
 }
 

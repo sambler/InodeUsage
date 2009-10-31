@@ -117,12 +117,29 @@
 -(void)readInData;
 
 
+//calculate figures for main window
 -(NSString*)downloadQuota;
 -(NSString*)quotaUsed;
 -(NSString*)quotaRemaining;
--(NSString*)quotaRemainingPC;
+-(float)quotaRemainingPC;
 -(NSString*)daysRemaining;
--(NSString*)daysRemainingPC;
+-(float)daysRemainingPC;
+-(NSString*)allowancePerDay;
+-(NSString*)currentAverage;
+-(float)currentAveragePC;
+-(NSString*)averageRemaining;
+-(float)averageRemainingPC;
+-(NSString*)todaysUsage;
+-(float)todaysUsagePC;
+-(NSString*)scaleForLevels;
+
+// common use functions
+-(int)currentPeriodDays;
+-(float)currentPeriodDaysLeft;
+-(float)currentQuota;
+-(float)currentQuotaUsed;
+-(float)statsMaxScale;
+-(NSString*)formatAsGB:(float)inputMB;
 
 
 @end
