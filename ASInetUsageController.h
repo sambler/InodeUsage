@@ -42,10 +42,13 @@
     IBOutlet NSTextField *oLastUpdate;
     IBOutlet NSTextField *oShowStatus;
     IBOutlet NSTextField *oShowVersion;
+    IBOutlet NSTabView *oTabView;
     
     //Account Panel
     IBOutlet NSTextField *oLoginID;
     IBOutlet NSTextField *oLoginPasswd;
+    IBOutlet NSButton *oSaveLogin;
+    IBOutlet NSButton *oUpdateButton;
     IBOutlet NSTextField *oExcessBilledAt; //Do we need this??? - Business acc maybe
     IBOutlet NSTextField *oDownloadSpeed;
     IBOutlet NSTextField *oPeriodStartDate;
@@ -98,7 +101,7 @@
     
     NSString *mAccSpeed;
     NSString *mAccISO;
-    NSDate *mPeriodStartDate;
+    NSCalendarDate *mPeriodStartDate;
     ASHistory *mHistory;
     
 }
@@ -107,5 +110,19 @@
 - (IBAction)changeUpdate:(id)sender;
 - (IBAction)ruleAdd:(id)sender;
 - (IBAction)ruleRemove:(id)sender;
+- (IBAction)changeSave:(id)sender;
 - (IBAction)update:(id)sender;
+
+-(void)refreshWindow;
+-(void)readInData;
+
+
+-(NSString*)downloadQuota;
+-(NSString*)quotaUsed;
+-(NSString*)quotaRemaining;
+-(NSString*)quotaRemainingPC;
+-(NSString*)daysRemaining;
+-(NSString*)daysRemainingPC;
+
+
 @end

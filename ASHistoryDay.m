@@ -39,7 +39,7 @@
 
 @implementation ASHistoryDay
 
-+(ASHistoryDay*)historyWith:(NSDate*)day :(float)usage
++(ASHistoryDay*)historyWith:(NSCalendarDate*)day :(float)usage
 {
     ASHistoryDay *newDay = [[self alloc] init];
     newDay->mDay = [day retain];
@@ -49,13 +49,41 @@
 
 +(ASHistoryDay*)historyFrom:(NSString*)dayStr :(NSString*)usageStr
 {
+    NSString *frmtDate;
+    NSCalendarDate *calDate;
     // dayStr is a six digit representation of the date (yymmdd)
     // break up each piece to get the values for the date -- yy<90 = 2000+
+    // not likely we will get history before 2000 - but we should handle any possibility
+    // timestamp of 1 sec before midnight and adelaide's CST timezone - +0930
     
-    return [ASHistoryDay historyWith:[NSDate initWithString:dayStr] :[usageStr floatValue]];
+    if([[dayStr substringWithRange:NSMakeRange(0,2)]intValue] < 90)
+    {
+	frmtDate = [NSString stringWithFormat:@"20%@-%@-%@ 23:59:59 +0930",[dayStr substringWithRange:NSMakeRange(0,2)],[dayStr substringWithRange:NSMakeRange(2,2)],[dayStr substringWithRange:NSMakeRange(4,2)]];
+    }else{
+	frmtDate = [NSString stringWithFormat:@"19%@-%@-%@ 23:59:59 +0930",[dayStr substringWithRange:NSMakeRange(0,2)],[dayStr substringWithRange:NSMakeRange(2,2)],[dayStr substringWithRange:NSMakeRange(4,2)]];
+    }
+    
+    calDate = [NSCalendarDate dateWithString:frmtDate calendarFormat:@"%Y-%m-%d %H:%M:%S %z"];
+    //[frmtDate autorelease];
+    return [ASHistoryDay historyWith:calDate :[usageStr floatValue]];
+//    return [ASHistoryDay historyWith:[NSCalendarDate initWithString:frmtDate] :[usageStr floatValue]];
 }
 
--(NSDate*)day
+-(NSString*)periodKey:(int)periodStartDay
+{
+    int dayOfHistory = [[mDay descriptionWithCalendarFormat:@"%d"]intValue];
+    NSString *tmpKey;
+    
+    if(dayOfHistory >= periodStartDay)
+	return [mDay descriptionWithCalendarFormat:@"%Y%m"];
+    else{
+	tmpKey = [NSString stringWithFormat:@"%@%i",[mDay descriptionWithCalendarFormat:@"%Y"],[[mDay descriptionWithCalendarFormat:@"%m"]intValue]-1];
+    }
+    //[tmpKey autorelease];
+    return tmpKey;
+}
+
+-(NSCalendarDate*)day
 {
     return mDay;
 }

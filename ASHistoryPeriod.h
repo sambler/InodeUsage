@@ -34,14 +34,26 @@
     
 */
 
+#import "ASHistoryDay.h"
 
 @interface ASHistoryPeriod : NSObject {
-    NSArray *mDaysInPeriod;
+    NSString *mPeriodKey;
+    NSMutableArray *mDaysInPeriod;
     float mPeriodTotalUsage;
     float mPeriodAverageUsage;
+    float mHighestDailyUsage;
     
 }
 
+-(ASHistoryPeriod*)initFor:(NSString*)period;
+
+-(void)add:(ASHistoryDay*)day;
+
+-(NSString*)key;
+-(float)totalUsage;
+-(float)highestDailyUsage;
+-(float)averageUsage;
+-(int)daysInPeriod;
 
 
 @end

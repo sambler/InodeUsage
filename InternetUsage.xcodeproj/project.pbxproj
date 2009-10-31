@@ -8,17 +8,31 @@
 
 /* Begin PBXBuildFile section */
 		34BC59AB10998237006F5082 /* ASInetUsageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34BC59AA10998237006F5082 /* ASInetUsageController.m */; };
-		34BC59D610998724006F5082 /* CURLHandle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34BC59D510998723006F5082 /* CURLHandle.framework */; };
-		34BC59DD1099874C006F5082 /* CURLHandle.framework in Resources */ = {isa = PBXBuildFile; fileRef = 34BC59D510998723006F5082 /* CURLHandle.framework */; };
 		34BC5A5A1099F356006F5082 /* ASHistoryDay.m in Sources */ = {isa = PBXBuildFile; fileRef = 34BC5A591099F356006F5082 /* ASHistoryDay.m */; };
 		34BC5A8F1099F740006F5082 /* ASHistoryPeriod.m in Sources */ = {isa = PBXBuildFile; fileRef = 34BC5A8E1099F740006F5082 /* ASHistoryPeriod.m */; };
 		34BC5AF0109A03F1006F5082 /* ASHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 34BC5AEF109A03F1006F5082 /* ASHistory.m */; };
 		34BC5AF2109A0450006F5082 /* HistoryClassInteractions in Resources */ = {isa = PBXBuildFile; fileRef = 34BC5AF1109A0450006F5082 /* HistoryClassInteractions */; };
+		34BC5B6D109A0C9F006F5082 /* CURLHandle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34BC5B6C109A0C9F006F5082 /* CURLHandle.framework */; };
+		34BC5BB1109A0FED006F5082 /* CURLHandle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 34BC5B6C109A0C9F006F5082 /* CURLHandle.framework */; };
+		34D76244109B928A008C4DE7 /* padsl-usage.txt in Resources */ = {isa = PBXBuildFile; fileRef = 34D76241109B927D008C4DE7 /* padsl-usage.txt */; };
 		8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		34BC5BAD109A0FDC006F5082 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				34BC5BB1109A0FED006F5082 /* CURLHandle.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -31,7 +45,6 @@
 		32CA4F630368D1EE00C91783 /* InternetUsage_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InternetUsage_Prefix.pch; sourceTree = "<group>"; };
 		34BC59A910998237006F5082 /* ASInetUsageController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ASInetUsageController.h; sourceTree = "<group>"; };
 		34BC59AA10998237006F5082 /* ASInetUsageController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ASInetUsageController.m; sourceTree = "<group>"; };
-		34BC59D510998723006F5082 /* CURLHandle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CURLHandle.framework; path = "../../curlHandle/codesvn-git/CURLHandleSource/build/Release/CURLHandle.framework"; sourceTree = SOURCE_ROOT; };
 		34BC5A581099F356006F5082 /* ASHistoryDay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASHistoryDay.h; sourceTree = "<group>"; };
 		34BC5A591099F356006F5082 /* ASHistoryDay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASHistoryDay.m; sourceTree = "<group>"; };
 		34BC5A8D1099F740006F5082 /* ASHistoryPeriod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASHistoryPeriod.h; sourceTree = "<group>"; };
@@ -39,6 +52,8 @@
 		34BC5AEE109A03F1006F5082 /* ASHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASHistory.h; sourceTree = "<group>"; };
 		34BC5AEF109A03F1006F5082 /* ASHistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASHistory.m; sourceTree = "<group>"; };
 		34BC5AF1109A0450006F5082 /* HistoryClassInteractions */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HistoryClassInteractions; sourceTree = "<group>"; };
+		34BC5B6C109A0C9F006F5082 /* CURLHandle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CURLHandle.framework; path = "../../curlHandle/codesvn-git/CURLHandleSource/build/Release/CURLHandle.framework"; sourceTree = SOURCE_ROOT; };
+		34D76241109B927D008C4DE7 /* padsl-usage.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "padsl-usage.txt"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* InternetUsage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InternetUsage.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -49,7 +64,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
-				34BC59D610998724006F5082 /* CURLHandle.framework in Frameworks */,
+				34BC5B6D109A0C9F006F5082 /* CURLHandle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,6 +140,7 @@
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				29B97318FDCFA39411CA2CEA /* MainMenu.nib */,
 				34BC5AF1109A0450006F5082 /* HistoryClassInteractions */,
+				34D76241109B927D008C4DE7 /* padsl-usage.txt */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -132,9 +148,9 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				34BC5B6C109A0C9F006F5082 /* CURLHandle.framework */,
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
-				34BC59D510998723006F5082 /* CURLHandle.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -146,6 +162,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "InternetUsage" */;
 			buildPhases = (
+				34BC5BAD109A0FDC006F5082 /* CopyFiles */,
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
@@ -180,10 +197,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				34BC59DD1099874C006F5082 /* CURLHandle.framework in Resources */,
 				8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */,
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				34BC5AF2109A0450006F5082 /* HistoryClassInteractions in Resources */,
+				34D76244109B928A008C4DE7 /* padsl-usage.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -230,8 +247,10 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../curlHandle/codesvn-git/CURLHandleSource/build/Debug\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/../../curlHandle/codesvn-git/CURLHandleSource/build/Release\"";
 				GCC_PREFIX_HEADER = InternetUsage_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_NAME = InternetUsage;
@@ -255,6 +274,7 @@
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CURRENT_PROJECT_VERSION = 1;
 				GCC_DEBUGGING_SYMBOLS = full;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_FAST_OBJC_DISPATCH = YES;
@@ -287,6 +307,7 @@
 				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
+				VERSIONING_SYSTEM = "apple-generic";
 				ZERO_LINK = YES;
 			};
 			name = Debug;
@@ -298,6 +319,7 @@
 					ppc,
 					i386,
 				);
+				CURRENT_PROJECT_VERSION = 1;
 				GCC_FAST_OBJC_DISPATCH = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -306,6 +328,7 @@
 				PREBINDING = YES;
 				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
 		};

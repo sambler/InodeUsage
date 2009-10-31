@@ -3,6 +3,7 @@
         {
             ACTIONS = {
                 changeHistory = id; 
+                changeSave = id; 
                 changeStartup = id; 
                 changeUpdate = id; 
                 ruleAdd = id; 
@@ -11,7 +12,52 @@
             }; 
             CLASS = ASInetUsageController; 
             LANGUAGE = ObjC; 
-            OUTLETS = {oLoginID = NSTextField; oLoginPasswd = NSTextField; }; 
+            OUTLETS = {
+                oAboutIcon = NSImageView; 
+                oAddRule = NSButton; 
+                oAllowancePerDay = NSTextField; 
+                oAllowancePerDayLevel = NSLevelIndicator; 
+                oAmountUsed = NSTextField; 
+                oAverageForPeriod = NSTextField; 
+                oAverageRemaining = NSTextField; 
+                oAverageRemainingLevel = NSLevelIndicator; 
+                oCurrentAverage = NSTextField; 
+                oCurrentAverageLevel = NSLevelIndicator; 
+                oCurrentDate = NSTextField; 
+                oDaysRemaining = NSTextField; 
+                oDaysRemainingLevel = NSLevelIndicator; 
+                oDaysRemainingPC = NSTextField; 
+                oDifference = NSTextField; 
+                oDifferenceLevel = NSLevelIndicator; 
+                oDifferencePC = NSTextField; 
+                oDownloadSpeed = NSTextField; 
+                oExcessBilledAt = NSTextField; 
+                oFirstDate = NSTextField; 
+                oLastDate = NSTextField; 
+                oLastUpdate = NSTextField; 
+                oLoginID = NSTextField; 
+                oLoginPasswd = NSTextField; 
+                oPeriodSelection = NSPopUpButton; 
+                oPeriodStartDate = NSTextField; 
+                oPrepaidMB = NSTextField; 
+                oRemoveRule = NSButton; 
+                oRulesList = NSTableView; 
+                oSaveLogin = NSButton; 
+                oShowMeter = NSButton; 
+                oShowScale = NSTextField; 
+                oShowStatus = NSTextField; 
+                oShowVersion = NSTextField; 
+                oTabView = NSTabView; 
+                oTodaysUsage = NSTextField; 
+                oTodaysUsageLevel = NSLevelIndicator; 
+                oTopScale = NSTextField; 
+                oTotalForPeriod = NSTextField; 
+                oUpdateButton = NSButton; 
+                oUpdateOption = NSPopUpButton; 
+                oUsageRemaining = NSTextField; 
+                oUsageRemainingLevel = NSLevelIndicator; 
+                oUsageRemainingPC = NSTextField; 
+            }; 
             SUPERCLASS = NSObject; 
         }, 
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 

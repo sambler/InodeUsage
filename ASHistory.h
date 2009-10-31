@@ -38,10 +38,18 @@
 
 @interface ASHistory : NSObject {
     NSMutableDictionary *mHistoryPeriods;
-    int mKnownPeriods;
-    int mKnownDays;
+    int mKnownPeriodsCount;
+    int mKnownDaysCount;
     
 }
+
+-(ASHistory*)init;
+
+-(int)knownPeriodsCount;
+-(int)knownDaysCount;
+
+-(void)addDay:(NSString*)day;
+-(void)addHistory:(NSString*)history;
 
 
 

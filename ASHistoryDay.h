@@ -36,16 +36,17 @@
 
 
 @interface ASHistoryDay : NSObject {
-    NSDate *mDay;
+    NSCalendarDate *mDay;
     float  mUsage;
 }
 
-+(ASHistoryDay*)historyWith:(NSDate*)day :(float)usage;
++(ASHistoryDay*)historyWith:(NSCalendarDate*)day :(float)usage;
 +(ASHistoryDay*)historyFrom:(NSString*)dayStr :(NSString*)usageStr;
 
--(NSDate*)day;
+-(NSCalendarDate*)day;
 -(float)usage;
 
+-(NSString*)periodKey:(int)periodStartDay;
 
 
 @end

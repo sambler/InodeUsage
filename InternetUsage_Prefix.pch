@@ -42,5 +42,11 @@
 #endif
 
 
-#define VERS "v0.1"
+#define VERS @"v0.1"
+
+// use consumer style metric conversions
+#define MB_GB_Conversion 1000
+
+//this is temp until I extract start from login data
+#define kPeriodStart 6
 

@@ -35,11 +35,56 @@
 */
 
 #import "ASHistoryPeriod.h"
-#import "ASHistoryDay.h"
 
 
 @implementation ASHistoryPeriod
 
+-(ASHistoryPeriod*)initFor:(NSString*)period
+{
+    if( (self = [super init]) )
+    {
+	mPeriodKey = [period retain];
+	mDaysInPeriod = [[NSMutableArray alloc]init];
+	mPeriodTotalUsage = 0.0;
+	mPeriodAverageUsage = 0.0;
+	mHighestDailyUsage = 0.0;
+    }
+    return self;
+}
+
+-(void)add:(ASHistoryDay*)day
+{
+    [mDaysInPeriod addObject:day];
+    mPeriodTotalUsage += [day usage];
+    mPeriodAverageUsage = mPeriodTotalUsage/[mDaysInPeriod count];
+    if([day usage]>mHighestDailyUsage)
+	mHighestDailyUsage = [day usage];
+}
+
+-(NSString*)key
+{
+    return mPeriodKey;
+}
+
+-(float)totalUsage
+{
+    return mPeriodTotalUsage;
+}
+
+-(float)highestDailyUsage
+{
+    return mHighestDailyUsage;
+}
+
+-(float)averageUsage
+{
+    return mPeriodAverageUsage;
+}
+
+-(int)daysInPeriod
+{
+    return [mDaysInPeriod count];
+}
 
 
 @end

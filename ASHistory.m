@@ -35,8 +35,71 @@
 */
 
 #import "ASHistory.h"
-
+#import "ASHistoryPeriod.h"
+#import "ASHistoryDay.h"
 
 @implementation ASHistory
+
+-(ASHistory*)init
+{
+    if ( (self = [super init]) )
+    {
+	mHistoryPeriods = [[NSMutableDictionary alloc]init];
+	mKnownDaysCount = 0;
+	mKnownPeriodsCount = 0;
+    }
+    return self;
+}
+
+-(int)knownPeriodsCount
+{
+    return mKnownPeriodsCount;
+}
+
+-(int)knownDaysCount
+{
+    return mKnownDaysCount;
+}
+
+-(void)addDay:(NSString*)day
+{
+    ASHistoryDay *dayHistory;
+    ASHistoryPeriod *pHist;
+    
+    dayHistory = [ASHistoryDay historyFrom:[day substringWithRange:NSMakeRange(0,6)] :[day substringWithRange:NSMakeRange(7,[day length]-7)]];
+    
+    if( (pHist = [mHistoryPeriods objectForKey:[dayHistory periodKey:kPeriodStart]]) )
+    {
+	[pHist add:dayHistory];
+    }else{
+	pHist = [[ASHistoryPeriod alloc]initFor:[dayHistory periodKey:kPeriodStart]];
+	[pHist add:dayHistory];
+	[mHistoryPeriods setObject:pHist forKey:[pHist key]];
+    }
+    
+    //[dayHistory release];
+    //[pHist release];
+}
+
+-(void)addHistory:(NSString*)history
+{
+    unsigned int lineStart = 0;
+    unsigned int lineEnd = 0;
+    unsigned int contEnd = 0;
+    int lineTarget = 0;
+    NSString *theLine;
+    
+    lineTarget = [history length] - 5;
+    
+    while(lineTarget>1)
+    {
+	[history getLineStart:&lineStart end:&lineEnd contentsEnd:&contEnd forRange:NSMakeRange(lineTarget,2)];
+	theLine = [history substringWithRange:NSMakeRange(lineStart,lineEnd-lineStart)];
+	[self addDay:theLine];
+	//[theLine release];
+	lineTarget = lineStart - 5;
+    }
+}
+
 
 @end
