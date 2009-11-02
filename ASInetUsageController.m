@@ -34,10 +34,36 @@
     
 */
 
+#import <Security/Security.h>
 #import "ASInetUsageController.h"
 #import "ASHistoryDay.h"
 
+
+// userdefaults string definitions
+
+NSString *ASIUSaveLoginDetails = @"Save Login Details";
+NSString *ASIUAutoUpdate = @"Auto Update Frequency";
+NSString *ASIUAutoShowUsageMeter = @"Show Usage Meter At Startup";
+NSString *ASIUDefaultLoginID = @"Default LoginID";
+
+// keychain service name - only used here
+const NSString *ASIUServiceName = @"InternodeUsage";
+
+
 @implementation ASInetUsageController
+
++(void)initialize
+{
+    NSMutableDictionary *factorySettings = [NSMutableDictionary dictionary];
+    
+    [factorySettings setObject:[NSNumber numberWithBool:true] forKey:ASIUSaveLoginDetails];
+    //save frequency of update in hours - 0 = no auto update
+    [factorySettings setObject:[NSNumber numberWithInt:0] forKey:ASIUAutoUpdate];
+    [factorySettings setObject:[NSNumber numberWithBool:false] forKey:ASIUAutoShowUsageMeter];
+    
+    
+    [[NSUserDefaults standardUserDefaults]registerDefaults:factorySettings];
+}
 
 
 -(void)awakeFromNib
@@ -55,6 +81,16 @@
     [oCurrentAverageLevel setEnabled:false];
     [oAverageRemainingLevel setEnabled:false];
     [oTodaysUsageLevel setEnabled:false];
+    
+    [oSaveLogin setState:[[NSUserDefaults standardUserDefaults]boolForKey:ASIUSaveLoginDetails]];
+    if( [oSaveLogin state] && ([[[NSUserDefaults standardUserDefaults]stringForKey:ASIUDefaultLoginID]length] > 0) )
+    {
+	[oLoginID setStringValue:[[NSUserDefaults standardUserDefaults]stringForKey:ASIUDefaultLoginID]];
+	[self fillLoginDetails];
+    } 
+    [oShowMeter setState:[[NSUserDefaults standardUserDefaults]boolForKey:ASIUAutoShowUsageMeter]];
+    [oUpdateOption selectItemWithTag:[[NSUserDefaults standardUserDefaults]integerForKey:ASIUAutoUpdate]];
+    
 }
 
 - (IBAction)changeHistory:(id)sender
@@ -63,10 +99,12 @@
 
 - (IBAction)changeStartup:(id)sender
 {
+    [[NSUserDefaults standardUserDefaults]setBool:[sender state] forKey:ASIUAutoShowUsageMeter];
 }
 
 - (IBAction)changeUpdate:(id)sender
 {
+    [[NSUserDefaults standardUserDefaults]setInteger:[sender selectedTag] forKey:ASIUAutoUpdate];
 }
 
 - (IBAction)ruleAdd:(id)sender
@@ -77,8 +115,15 @@
 {
 }
 
+- (IBAction)changeLogin:(id)sender
+{
+    [self saveLoginDetails];
+}
+
 - (IBAction)changeSave:(id)sender
 {
+    [[NSUserDefaults standardUserDefaults]setBool:[sender state] forKey:ASIUSaveLoginDetails];
+    if ([sender state]) [self changeLogin:nil];
 }
 
 - (IBAction)update:(id)sender
@@ -178,7 +223,7 @@
     [tmperror release];
     //======== end testing
     
-    [mHistory addHistory:historydata];
+    [mHistory addHistory:historydata periodStartDay:[mPeriodStartDate dayOfMonth]];
     
 }
 
@@ -303,6 +348,60 @@
 	return [NSString stringWithFormat:@"%.2f GB",inputMB/MB_GB_Conversion];
     else
 	return [NSString stringWithFormat:@"%.1f MB",inputMB];
+}
+
+//build history menu
+-(void)buildHistoryMenu
+{
+    
+}
+
+//saving login details
+-(void)fillLoginDetails
+{
+    //UInt32 usernameLength;
+    //char *username;
+    UInt32 passwdLength;
+    void *passwd;
+    
+    if ( [[oLoginID stringValue]length] == 0 ) return; // no username = don't search
+    
+    // we don't seem to have a way to retrieve the username and password from the keychain ???
+    // get/store the username from userdefaults - password from keychain
+    
+    SecKeychainFindGenericPassword(NULL,[ASIUServiceName length],[ASIUServiceName cString],[[oLoginID stringValue] length],[[oLoginID stringValue] cString],&passwdLength,&passwd,NULL);
+    
+    [oLoginPasswd setStringValue:[NSString stringWithCString:passwd length:passwdLength]];
+    
+    SecKeychainItemFreeContent(NULL,passwd);
+}
+
+-(void)saveLoginDetails
+{
+    OSStatus status;
+    
+    // is there anything to save??
+    if( [[oLoginID stringValue]length] == 0 ) return;
+    if( [[oLoginID stringValue]caseInsensitiveCompare:@"username"] == NSOrderedSame ) return; // default content - treat as empty
+    if( [[oLoginPasswd stringValue]length] == 0 ) return;
+    
+    [[NSUserDefaults standardUserDefaults]setObject:[oLoginID stringValue] forKey:ASIUDefaultLoginID];
+    
+    status = SecKeychainAddGenericPassword(NULL,[ASIUServiceName length],[ASIUServiceName cString],[[oLoginID stringValue]length],[[oLoginID stringValue]cString],[[oLoginPasswd stringValue]length],[[oLoginPasswd stringValue]cString],NULL);
+    
+    if(status == errSecDuplicateItem)
+    //if(status == -25299) // not finding the code definitions??
+    {
+	UInt32 passwdLength;
+	void *passwd;
+	SecKeychainItemRef itemRef = nil;
+	
+	SecKeychainFindGenericPassword(NULL,[ASIUServiceName length],[ASIUServiceName cString],[[oLoginID stringValue] length],[[oLoginID stringValue] cString],&passwdLength,&passwd,&itemRef);
+	
+	SecKeychainItemFreeContent(NULL,passwd);
+	
+	SecKeychainItemModifyAttributesAndData(itemRef,NULL,[[oLoginPasswd stringValue]length],[[oLoginPasswd stringValue]cString]);
+    }
 }
 
 

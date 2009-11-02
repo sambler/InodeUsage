@@ -3,6 +3,7 @@
         {
             ACTIONS = {
                 changeHistory = id; 
+                changeLogin = id; 
                 changeSave = id; 
                 changeStartup = id; 
                 changeUpdate = id; 

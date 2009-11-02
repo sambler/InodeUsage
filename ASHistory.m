@@ -47,6 +47,7 @@
 	mHistoryPeriods = [[NSMutableDictionary alloc]init];
 	mKnownDaysCount = 0;
 	mKnownPeriodsCount = 0;
+//	mPeriodStartDay = 0;
     }
     return self;
 }
@@ -61,25 +62,25 @@
     return mKnownDaysCount;
 }
 
--(void)addDay:(NSString*)day
+-(void)addDay:(NSString*)day periodStartDay:(int)startDay
 {
     ASHistoryDay *dayHistory;
     ASHistoryPeriod *pHist;
     
     dayHistory = [ASHistoryDay historyFrom:[day substringWithRange:NSMakeRange(0,6)] :[day substringWithRange:NSMakeRange(7,[day length]-7)]];
     
-    if( (pHist = [mHistoryPeriods objectForKey:[dayHistory periodKey:kPeriodStart]]) )
+    if( (pHist = [mHistoryPeriods objectForKey:[dayHistory periodKey:startDay]]) )
     {
 	[pHist add:dayHistory];
     }else{
-	pHist = [[ASHistoryPeriod alloc]initFor:[dayHistory periodKey:kPeriodStart]];
+	pHist = [[ASHistoryPeriod alloc]initFor:[dayHistory periodKey:startDay]];
 	[pHist add:dayHistory];
 	[mHistoryPeriods setObject:pHist forKey:[pHist key]];
     }
     
 }
 
--(void)addHistory:(NSString*)history
+-(void)addHistory:(NSString*)history periodStartDay:(int)startDay
 {
     unsigned int lineStart = 0;
     unsigned int lineEnd = 0;
@@ -93,7 +94,7 @@
     {
 	[history getLineStart:&lineStart end:&lineEnd contentsEnd:&contEnd forRange:NSMakeRange(lineTarget,2)];
 	theLine = [history substringWithRange:NSMakeRange(lineStart,lineEnd-lineStart)];
-	[self addDay:theLine];
+	[self addDay:theLine periodStartDay:startDay];
 	lineTarget = lineStart - 5;
     }
 }
@@ -102,9 +103,8 @@
 {
     NSString *periodKey = [day descriptionWithCalendarFormat:@"%Y%m"];
     ASHistoryPeriod *periodData = [self historyForPeriod:periodKey];
-    ASHistoryDay *theDay;
+    ASHistoryDay *theDay = [periodData historyForDay:day];
     
-    theDay = [periodData historyForDay:day];
     if( theDay == nil )
     {
 	// didn't get day so try previous period

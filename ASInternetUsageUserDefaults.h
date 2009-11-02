@@ -1,5 +1,5 @@
 /*
-    InternetUsage_Prefix.pch
+    ASInternetUsageUserDefaults.h
     InternetUsage
     
     Copyright (c) 2009, Shane Ambler
@@ -30,20 +30,15 @@
 /*
 ******************************************************************************
     Change History :-
-    25/10/2009 - Created by Shane Ambler
+    01/11/2009 - Created by Shane Ambler
     
 */
-//
-// Prefix header for all source files of the 'InternetUsage' target in the 'InternetUsage' project
-//
-
-#ifdef __OBJC__
-    #import <Cocoa/Cocoa.h>
-#endif
 
 
-#define VERS @"v0.1"
+// nsuserdefaults string keys are extern defined here for application wide use
+// see ASInetUsageController.m for actual definitions
 
-// use consumer style metric conversions
-#define MB_GB_Conversion 1000
-
+extern NSString *ASIUSaveLoginDetails;
+extern NSString *ASIUAutoUpdate;
+extern NSString *ASIUAutoShowUsageMeter;
+extern NSString *ASIUDefaultLoginID;

@@ -15,6 +15,8 @@
 		34BC5B6D109A0C9F006F5082 /* CURLHandle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34BC5B6C109A0C9F006F5082 /* CURLHandle.framework */; };
 		34BC5BB1109A0FED006F5082 /* CURLHandle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 34BC5B6C109A0C9F006F5082 /* CURLHandle.framework */; };
 		34D76244109B928A008C4DE7 /* padsl-usage.txt in Resources */ = {isa = PBXBuildFile; fileRef = 34D76241109B927D008C4DE7 /* padsl-usage.txt */; };
+		34D7691D109D63F5008C4DE7 /* ASInternetUsageUserDefaults.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 34D7691C109D63F4008C4DE7 /* ASInternetUsageUserDefaults.h */; };
+		34D76B2C109EA756008C4DE7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34D76B2B109EA756008C4DE7 /* Security.framework */; };
 		8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
@@ -29,6 +31,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				34BC5BB1109A0FED006F5082 /* CURLHandle.framework in CopyFiles */,
+				34D7691D109D63F5008C4DE7 /* ASInternetUsageUserDefaults.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -54,6 +57,8 @@
 		34BC5AF1109A0450006F5082 /* HistoryClassInteractions */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HistoryClassInteractions; sourceTree = "<group>"; };
 		34BC5B6C109A0C9F006F5082 /* CURLHandle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CURLHandle.framework; path = "../../curlHandle/codesvn-git/CURLHandleSource/build/Release/CURLHandle.framework"; sourceTree = SOURCE_ROOT; };
 		34D76241109B927D008C4DE7 /* padsl-usage.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "padsl-usage.txt"; sourceTree = "<group>"; };
+		34D7691C109D63F4008C4DE7 /* ASInternetUsageUserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASInternetUsageUserDefaults.h; sourceTree = "<group>"; };
+		34D76B2B109EA756008C4DE7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = /System/Library/Frameworks/Security.framework; sourceTree = "<absolute>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* InternetUsage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InternetUsage.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -65,6 +70,7 @@
 			files = (
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				34BC5B6D109A0C9F006F5082 /* CURLHandle.framework in Frameworks */,
+				34D76B2C109EA756008C4DE7 /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,6 +106,7 @@
 				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
 				13E42FB307B3F0F600E4EEF1 /* CoreData.framework */,
 				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
+				34D76B2B109EA756008C4DE7 /* Security.framework */,
 			);
 			name = "Other Frameworks";
 			sourceTree = "<group>";
@@ -129,6 +136,7 @@
 			children = (
 				32CA4F630368D1EE00C91783 /* InternetUsage_Prefix.pch */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
+				34D7691C109D63F4008C4DE7 /* ASInternetUsageUserDefaults.h */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";

@@ -110,6 +110,7 @@
 - (IBAction)changeUpdate:(id)sender;
 - (IBAction)ruleAdd:(id)sender;
 - (IBAction)ruleRemove:(id)sender;
+- (IBAction)changeLogin:(id)sender;
 - (IBAction)changeSave:(id)sender;
 - (IBAction)update:(id)sender;
 
@@ -140,6 +141,12 @@
 -(float)currentQuotaUsed;
 -(float)statsMaxScale;
 -(NSString*)formatAsGB:(float)inputMB;
+
+-(void)buildHistoryMenu;
+
+-(void)fillLoginDetails;
+-(void)saveLoginDetails;
+
 
 
 @end

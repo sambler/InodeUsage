@@ -42,6 +42,7 @@
     NSMutableDictionary *mHistoryPeriods;
     int mKnownPeriodsCount;
     int mKnownDaysCount;
+ //   int mPeriodStartDay;
     
 }
 
@@ -50,8 +51,8 @@
 -(int)knownPeriodsCount;
 -(int)knownDaysCount;
 
--(void)addDay:(NSString*)day;
--(void)addHistory:(NSString*)history;
+-(void)addDay:(NSString*)day periodStartDay:(int)startDay;
+-(void)addHistory:(NSString*)history periodStartDay:(int)startDay;
 
 -(ASHistoryDay*)historyForDay:(NSCalendarDate*)day;
 -(ASHistoryPeriod*)historyForPeriod:(NSString*)period;
