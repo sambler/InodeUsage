@@ -43,10 +43,12 @@
 +(ASHistoryDay*)historyWith:(NSCalendarDate*)day :(float)usage;
 +(ASHistoryDay*)historyFrom:(NSString*)dayStr :(NSString*)usageStr;
 
--(NSCalendarDate*)day;
+-(NSCalendarDate*)storedDay;
 -(float)usage;
 
 -(NSString*)periodKey:(int)periodStartDay;
 
 
 @end
+
+int historyDateSorting(ASHistoryDay* first, ASHistoryDay* second, void *context);

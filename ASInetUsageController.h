@@ -35,6 +35,7 @@
 */
 
 #import "ASHistory.h"
+#import "ASHistoryView.h"
 
 @interface ASInetUsageController : NSObject
 {
@@ -84,7 +85,9 @@
     IBOutlet NSTextField *oFirstDate;
     IBOutlet NSTextField *oLastDate;
     IBOutlet NSTextField *oCurrentDate;
-    IBOutlet NSPopUpButton *oPeriodSelection; //Do we need to talk to this???
+    IBOutlet NSPopUpButton *oHistoryMenu;
+    IBOutlet NSButton *oViewAsTable;
+    IBOutlet ASHistoryView *oHistoryGraph;
     
     //Rules Panel
     IBOutlet NSButton *oAddRule;
@@ -106,6 +109,7 @@
     
 }
 - (IBAction)changeHistory:(id)sender;
+- (IBAction)viewList:(id)sender;
 - (IBAction)changeStartup:(id)sender;
 - (IBAction)changeUpdate:(id)sender;
 - (IBAction)ruleAdd:(id)sender;
@@ -143,6 +147,7 @@
 -(NSString*)formatAsGB:(float)inputMB;
 
 -(void)buildHistoryMenu;
+-(ASHistoryPeriod*)buildFullHistoryArray;
 
 -(void)fillLoginDetails;
 -(void)saveLoginDetails;

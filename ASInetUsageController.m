@@ -95,6 +95,34 @@ const NSString *ASIUServiceName = @"InternodeUsage";
 
 - (IBAction)changeHistory:(id)sender
 {
+    ASHistoryPeriod* theData;
+    
+    if ([sender tag] == 10) //current period
+    {
+	theData = [[mHistory historyForPeriod:[mPeriodStartDate descriptionWithCalendarFormat:@"%Y%m"]]copyAsFullPeriod];
+    }
+    else if ([sender tag] == 20)//period totals
+    {
+	theData = [self buildFullHistoryArray];
+    }
+    else // sender tag determines the period
+    {
+	theData = [[mHistory historyForPeriod:[NSString stringWithFormat:@"%i",[sender tag]]]copyAsFullPeriod];
+    }
+    
+    [oAverageForPeriod setStringValue:[self formatAsGB:[theData averageUsage]]];
+    [oTotalForPeriod setStringValue:[self formatAsGB:[theData totalUsage]]];
+    [oTopScale setStringValue:[self formatAsGB:[theData highestDailyUsage]]];
+    [oFirstDate setStringValue:[[theData startDate]descriptionWithCalendarFormat:@"%d/%m/%Y"]];
+    [oLastDate setStringValue:[[theData endDate]descriptionWithCalendarFormat:@"%d/%m/%Y"]];
+    [oCurrentDate setStringValue:@""];
+    
+    [oHistoryGraph setPeriodData:theData];
+    [oHistoryGraph setNeedsDisplay:true];
+}
+
+- (IBAction)viewList:(id)sender
+{    
 }
 
 - (IBAction)changeStartup:(id)sender
@@ -178,13 +206,16 @@ const NSString *ASIUServiceName = @"InternodeUsage";
     [oShowScale setStringValue:[self scaleForLevels]];
     
     //history tab
+    // no need to update here - changing the history menu triggers an update
 //    oAverageForPeriod;
 //    oTotalForPeriod;
 //    oTopScale;
 //    oFirstDate;
 //    oLastDate;
 //    oCurrentDate;
-//    oPeriodSelection; //Do we need to talk to this???
+//    oHistoryMenu;
+//    oViewAsTable;
+    [oHistoryGraph setNeedsDisplay:true];
     
     //rules tab
 //    oAddRule;
@@ -212,7 +243,7 @@ const NSString *ASIUServiceName = @"InternodeUsage";
     //======== start testing only
     mAccSpeed = [NSString stringWithFormat:@"24 Mbits/sec"];
     mAccISO = [NSString stringWithFormat:@"10098.845488 40000 20091126 0.00"]; // live sample - ttlDown quota rollover ???(excess cost maybe)
-    mPeriodStartDate = [NSCalendarDate dateWithString:[[mAccISO componentsSeparatedByString:@" "]objectAtIndex:2] calendarFormat:@"%Y%m%d"];
+    mPeriodStartDate = [[[NSCalendarDate dateWithString:[[mAccISO componentsSeparatedByString:@" "]objectAtIndex:2] calendarFormat:@"%Y%m%d"] dateByAddingYears:0 months:-1 days:0 hours:0 minutes:0 seconds:0]retain]; //we get the end date so convert to start
     
     myBundle = [NSBundle mainBundle];
     histPath = [myBundle pathForResource:@"padsl-usage" ofType:@"txt"];
@@ -223,8 +254,10 @@ const NSString *ASIUServiceName = @"InternodeUsage";
     [tmperror release];
     //======== end testing
     
-    [mHistory addHistory:historydata periodStartDay:[mPeriodStartDate dayOfMonth]];
-    
+    [mHistory addHistory:historydata periodStartDay:mPeriodStartDate];
+    [self buildHistoryMenu];
+    [oHistoryMenu selectItemAtIndex:0];
+    [self changeHistory:[oHistoryMenu itemAtIndex:0]];
 }
 
 -(NSString*)downloadQuota
@@ -321,7 +354,7 @@ const NSString *ASIUServiceName = @"InternodeUsage";
 {
     int daysLeft, hoursLeft;
     
-    [mPeriodStartDate years:NULL months:NULL days:&daysLeft hours:&hoursLeft minutes:NULL seconds:NULL sinceDate:[NSCalendarDate calendarDate]];
+    [[mPeriodStartDate dateByAddingYears:0 months:1 days:0 hours:0 minutes:0 seconds:0]years:NULL months:NULL days:&daysLeft hours:&hoursLeft minutes:NULL seconds:NULL sinceDate:[NSCalendarDate calendarDate]];
     
     return daysLeft+(hoursLeft/(float)24);
 }
@@ -344,7 +377,9 @@ const NSString *ASIUServiceName = @"InternodeUsage";
 
 -(NSString*)formatAsGB:(float)inputMB
 {
-    if( inputMB > MB_GB_Conversion )
+    if( inputMB > (MB_GB_Conversion*MB_GB_Conversion) )
+	return [NSString stringWithFormat:@"%.2f TB",(inputMB/MB_GB_Conversion)/MB_GB_Conversion];
+    else if( inputMB > MB_GB_Conversion )
 	return [NSString stringWithFormat:@"%.2f GB",inputMB/MB_GB_Conversion];
     else
 	return [NSString stringWithFormat:@"%.1f MB",inputMB];
@@ -353,7 +388,81 @@ const NSString *ASIUServiceName = @"InternodeUsage";
 //build history menu
 -(void)buildHistoryMenu
 {
+    NSString *itemOne = @"Current Period...";
+    NSString *itemTwo = @"Period Totals";
     
+    NSMenu *theMenu = [oHistoryMenu menu];
+    NSMenuItem *theItem;
+    
+    NSArray *periodList;
+    NSEnumerator *listEnumerator;
+    NSString *curKey;
+    
+    //we could be re-updating - start from scratch
+    [oHistoryMenu removeAllItems];
+    
+    [theMenu setAutoenablesItems:false];
+    
+    theItem = [[NSMenuItem alloc]initWithTitle:itemOne action:@selector(changeHistory:) keyEquivalent:@""];
+    [theItem setTag:10];
+    [theItem setEnabled:true];
+    [theItem setTarget:self];
+    [theMenu addItem:theItem];
+    [theItem release];
+    
+    theItem = [[NSMenuItem alloc]initWithTitle:itemTwo action:@selector(changeHistory:) keyEquivalent:@""];
+    [theItem setTag:20];
+    [theItem setEnabled:true];
+    [theItem setTarget:self];
+    [theMenu addItem:theItem];
+    [theItem release];
+    
+    theItem = [NSMenuItem separatorItem];
+    [theMenu addItem:theItem];
+    
+    periodList = [mHistory periodKeyArray];
+    listEnumerator = [periodList reverseObjectEnumerator];
+    while( (curKey = [listEnumerator nextObject]) )
+    {
+	NSString *curTitle;
+	NSCalendarDate *curDate;
+	
+	curDate = [NSCalendarDate dateWithString:[NSString stringWithFormat:@"%@%i",curKey,[mPeriodStartDate dayOfMonth]] calendarFormat:@"%Y%m%d"];
+	
+	curTitle = [NSString stringWithFormat:@"%@...%@",[curDate descriptionWithCalendarFormat:@"%d/%m/%y"],[[curDate dateByAddingYears:0 months:1 days:-1 hours:0 minutes:0 seconds:0]descriptionWithCalendarFormat:@"%d/%m/%y"]];
+	
+	theItem = [[NSMenuItem alloc]initWithTitle:curTitle action:@selector(changeHistory:) keyEquivalent:@""];
+	[theItem setTag:[curKey intValue]];
+	[theItem setEnabled:true];
+	[theItem setTarget:self];
+	[theMenu addItem:theItem];
+	[theItem release];
+    }
+}
+
+-(ASHistoryPeriod*)buildFullHistoryArray
+{
+    //we are building an array of history days
+    //we want to imitate a normal period history but have total period traffic for each entry
+    //instead of day traffic. The date used will be the first day of the period being recorded.
+    
+    NSArray *periodList;
+    NSEnumerator *listEnumerator;
+    ASHistoryPeriod *curItem;
+    ASHistoryPeriod *tmpHistory = [[[ASHistoryPeriod alloc]initFor:@"200001" starting:[NSCalendarDate dateWithYear:2000 month:01 day:01 hour:0 minute:0 second:0 timeZone:[NSTimeZone timeZoneWithName:@"CST"]]]autorelease];
+    ASHistoryDay *tmpDay;
+    NSCalendarDate *tmpEndDate;
+    
+    periodList = [mHistory periodDataArray];
+    listEnumerator = [periodList objectEnumerator];
+    while( (curItem = [listEnumerator nextObject]) )
+    {
+	tmpDay = [ASHistoryDay historyWith:[curItem startDate] :[curItem totalUsage]];
+	[tmpHistory add:tmpDay];
+	tmpEndDate = [curItem startDate];
+    }
+    [tmpHistory setEndDate:tmpEndDate];
+    return tmpHistory;
 }
 
 //saving login details
@@ -390,7 +499,6 @@ const NSString *ASIUServiceName = @"InternodeUsage";
     status = SecKeychainAddGenericPassword(NULL,[ASIUServiceName length],[ASIUServiceName cString],[[oLoginID stringValue]length],[[oLoginID stringValue]cString],[[oLoginPasswd stringValue]length],[[oLoginPasswd stringValue]cString],NULL);
     
     if(status == errSecDuplicateItem)
-    //if(status == -25299) // not finding the code definitions??
     {
 	UInt32 passwdLength;
 	void *passwd;

@@ -1,5 +1,5 @@
 /*
-    ASHistory.h
+    ASHistoryView.h
     InternetUsage
     
     Copyright (c) 2009, Shane Ambler
@@ -30,34 +30,22 @@
 /*
 ******************************************************************************
     Change History :-
-    30/10/2009 - Created by Shane Ambler
+    03/11/2009 - Created by Shane Ambler
     
 */
 
-#import "ASHistoryDay.h"
+
 #import "ASHistoryPeriod.h"
 
 
-@interface ASHistory : NSObject {
-    NSMutableDictionary *mHistoryPeriods;
-    int mKnownPeriodsCount;
-    int mKnownDaysCount;
+@interface ASHistoryView : NSView {
+    ASHistoryPeriod *mCurrentPeriod;
+    int mDaysInPeriod;
+    float mSpacePerDay;
     
 }
 
--(ASHistory*)init;
-
--(int)knownPeriodsCount;
--(int)knownDaysCount;
-
--(void)addDay:(NSString*)day periodStartDay:(NSCalendarDate*)startDay;
--(void)addHistory:(NSString*)history periodStartDay:(NSCalendarDate*)startDay;
-
--(ASHistoryDay*)historyForDay:(NSCalendarDate*)day;
--(ASHistoryPeriod*)historyForPeriod:(NSString*)period;
-
--(NSArray*)periodKeyArray;
--(NSArray*)periodDataArray;
+-(void)setPeriodData:(ASHistoryPeriod*)periodData;
 
 
 

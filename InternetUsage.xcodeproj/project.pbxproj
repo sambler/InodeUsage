@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		34A7DADF109EC3EA00FFF556 /* ASHistoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34A7DADD109EC3EA00FFF556 /* ASHistoryView.m */; };
 		34BC59AB10998237006F5082 /* ASInetUsageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34BC59AA10998237006F5082 /* ASInetUsageController.m */; };
 		34BC5A5A1099F356006F5082 /* ASHistoryDay.m in Sources */ = {isa = PBXBuildFile; fileRef = 34BC5A591099F356006F5082 /* ASHistoryDay.m */; };
 		34BC5A8F1099F740006F5082 /* ASHistoryPeriod.m in Sources */ = {isa = PBXBuildFile; fileRef = 34BC5A8E1099F740006F5082 /* ASHistoryPeriod.m */; };
@@ -15,7 +16,6 @@
 		34BC5B6D109A0C9F006F5082 /* CURLHandle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34BC5B6C109A0C9F006F5082 /* CURLHandle.framework */; };
 		34BC5BB1109A0FED006F5082 /* CURLHandle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 34BC5B6C109A0C9F006F5082 /* CURLHandle.framework */; };
 		34D76244109B928A008C4DE7 /* padsl-usage.txt in Resources */ = {isa = PBXBuildFile; fileRef = 34D76241109B927D008C4DE7 /* padsl-usage.txt */; };
-		34D7691D109D63F5008C4DE7 /* ASInternetUsageUserDefaults.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 34D7691C109D63F4008C4DE7 /* ASInternetUsageUserDefaults.h */; };
 		34D76B2C109EA756008C4DE7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34D76B2B109EA756008C4DE7 /* Security.framework */; };
 		8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
@@ -31,7 +31,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				34BC5BB1109A0FED006F5082 /* CURLHandle.framework in CopyFiles */,
-				34D7691D109D63F5008C4DE7 /* ASInternetUsageUserDefaults.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -46,6 +45,8 @@
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32CA4F630368D1EE00C91783 /* InternetUsage_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InternetUsage_Prefix.pch; sourceTree = "<group>"; };
+		34A7DADC109EC3EA00FFF556 /* ASHistoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASHistoryView.h; sourceTree = "<group>"; };
+		34A7DADD109EC3EA00FFF556 /* ASHistoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASHistoryView.m; sourceTree = "<group>"; };
 		34BC59A910998237006F5082 /* ASInetUsageController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ASInetUsageController.h; sourceTree = "<group>"; };
 		34BC59AA10998237006F5082 /* ASInetUsageController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ASInetUsageController.m; sourceTree = "<group>"; };
 		34BC5A581099F356006F5082 /* ASHistoryDay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASHistoryDay.h; sourceTree = "<group>"; };
@@ -82,12 +83,14 @@
 			children = (
 				34BC59A910998237006F5082 /* ASInetUsageController.h */,
 				34BC59AA10998237006F5082 /* ASInetUsageController.m */,
+				34BC5AEE109A03F1006F5082 /* ASHistory.h */,
+				34BC5AEF109A03F1006F5082 /* ASHistory.m */,
 				34BC5A581099F356006F5082 /* ASHistoryDay.h */,
 				34BC5A591099F356006F5082 /* ASHistoryDay.m */,
 				34BC5A8D1099F740006F5082 /* ASHistoryPeriod.h */,
 				34BC5A8E1099F740006F5082 /* ASHistoryPeriod.m */,
-				34BC5AEE109A03F1006F5082 /* ASHistory.h */,
-				34BC5AEF109A03F1006F5082 /* ASHistory.m */,
+				34A7DADC109EC3EA00FFF556 /* ASHistoryView.h */,
+				34A7DADD109EC3EA00FFF556 /* ASHistoryView.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -224,6 +227,7 @@
 				34BC5A5A1099F356006F5082 /* ASHistoryDay.m in Sources */,
 				34BC5A8F1099F740006F5082 /* ASHistoryPeriod.m in Sources */,
 				34BC5AF0109A03F1006F5082 /* ASHistory.m in Sources */,
+				34A7DADF109EC3EA00FFF556 /* ASHistoryView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -39,12 +39,13 @@
 
 @implementation ASHistoryPeriod
 
--(ASHistoryPeriod*)initFor:(NSString*)period
+-(ASHistoryPeriod*)initFor:(NSString*)period starting:(NSCalendarDate*)startDay
 {
     if( (self = [super init]) )
     {
 	mPeriodKey = [period retain];
-	mDaysInPeriod = [[NSMutableArray alloc]init];
+	mPeriodHistory = [[NSMutableArray alloc]init];
+	mStartDay = [[NSCalendarDate dateWithString:[NSString stringWithFormat:@"%@%@",period,[startDay descriptionWithCalendarFormat:@"%d"]] calendarFormat:@"%Y%m%d"]retain];
 	mPeriodTotalUsage = 0.0;
 	mPeriodAverageUsage = 0.0;
 	mHighestDailyUsage = 0.0;
@@ -54,9 +55,9 @@
 
 -(void)add:(ASHistoryDay*)day
 {
-    [mDaysInPeriod addObject:day];
+    [mPeriodHistory addObject:day];
     mPeriodTotalUsage += [day usage];
-    mPeriodAverageUsage = mPeriodTotalUsage/[mDaysInPeriod count];
+    mPeriodAverageUsage = mPeriodTotalUsage/[mPeriodHistory count];
     if([day usage]>mHighestDailyUsage)
 	mHighestDailyUsage = [day usage];
 }
@@ -83,8 +84,79 @@
 
 -(int)daysInPeriod
 {
-    // should we calc this from start date or just rely on history entries??
-    return [mDaysInPeriod count];
+    int periodTerm;
+    
+    [[mStartDay dateByAddingYears:0 months:1 days:0 hours:0 minutes:0 seconds:0]years:nil months:nil days:&periodTerm hours:nil minutes:nil seconds:nil sinceDate:mStartDay];
+    
+    return periodTerm;
+}
+
+-(int)entriesCount
+{
+    return [mPeriodHistory count];
+}
+
+-(NSCalendarDate*)startDate
+{
+    return mStartDay;
+}
+
+-(void)setEndDate:(NSCalendarDate*)ending
+{
+    mEndDay = [ending retain];
+}
+
+-(NSCalendarDate*)endDate
+{
+    if(mEndDay == nil)
+	return [mStartDay dateByAddingYears:0 months:1 days:-1 hours:0 minutes:0 seconds:0];
+    
+    return mEndDay;
+}
+
+-(NSMutableArray*)data
+{
+    return mPeriodHistory;
+}
+
+-(NSArray*)periodDataSorted
+{
+    return [mPeriodHistory sortedArrayUsingFunction:historyDateSorting context:nil];
+}
+
+-(ASHistoryPeriod*)copyAsFullPeriod
+{
+    //for the history graph we need a full listing - add zero usage for any missing days
+    ASHistoryPeriod *tmpPeriod = [[[ASHistoryPeriod alloc]init]autorelease];
+    NSCalendarDate *tmpDate;
+    ASHistoryDay *newDay;
+    unsigned int x, daysToLoop = [self daysInPeriod];
+    int daysDiff;
+    
+    //so we start with a sorted array and the copy the other data
+    tmpPeriod->mPeriodHistory = [[NSMutableArray arrayWithArray:[self periodDataSorted]]retain];
+    tmpPeriod->mPeriodKey = [[mPeriodKey copy]retain];
+    tmpPeriod->mStartDay = [[mStartDay copy]retain];
+    tmpPeriod->mPeriodTotalUsage = mPeriodTotalUsage;
+    tmpPeriod->mPeriodAverageUsage = mPeriodAverageUsage;
+    tmpPeriod->mHighestDailyUsage = mHighestDailyUsage;
+    
+    for (x = 0; x < daysToLoop; x++)
+    {
+	tmpDate = [mStartDay dateByAddingYears:0 months:0 days:x hours:0 minutes:0 seconds:0]; //the date we expect at this array index
+	if( x < [tmpPeriod->mPeriodHistory count] )
+	    [[[tmpPeriod->mPeriodHistory objectAtIndex:x]storedDay] years:nil months:nil days:&daysDiff hours:nil minutes:nil seconds:nil sinceDate:tmpDate];
+	else
+	    daysDiff = 1;//make the following add a day
+	
+	if(daysDiff != 0)
+	{
+	    newDay = [ASHistoryDay historyWith:tmpDate :0.0];
+	    [tmpPeriod->mPeriodHistory insertObject:newDay atIndex:x];
+	}
+    }
+    
+    return tmpPeriod;
 }
 
 -(ASHistoryDay*)historyForDay:(NSCalendarDate*)day
@@ -93,10 +165,10 @@
     int daysDifference;
     unsigned int x;
     
-    for (x=0; x<[mDaysInPeriod count]; x++)
+    for (x = 0; x < [mPeriodHistory count]; x++)
     {
-	theDayData = [mDaysInPeriod objectAtIndex:x];
-	[[theDayData day] years:nil months:nil days:&daysDifference hours:nil minutes:nil seconds:nil sinceDate:day];
+	theDayData = [mPeriodHistory objectAtIndex:x];
+	[[theDayData storedDay] years:nil months:nil days:&daysDifference hours:nil minutes:nil seconds:nil sinceDate:day];
 	if( daysDifference == 0 )
 	    return theDayData;
     }
@@ -106,4 +178,14 @@
 
 
 
+
+
 @end
+
+
+int historyPeriodValueSorting(ASHistoryPeriod* first, ASHistoryPeriod* second, void *context)
+{
+    return [[first key]caseInsensitiveCompare:[second key]];
+}
+
+

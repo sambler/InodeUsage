@@ -1,5 +1,5 @@
 /*
-    ASHistory.h
+    ASHistoryView.m
     InternetUsage
     
     Copyright (c) 2009, Shane Ambler
@@ -30,34 +30,68 @@
 /*
 ******************************************************************************
     Change History :-
-    30/10/2009 - Created by Shane Ambler
+    03/11/2009 - Created by Shane Ambler
     
 */
 
-#import "ASHistoryDay.h"
-#import "ASHistoryPeriod.h"
+#import "ASHistoryView.h"
 
 
-@interface ASHistory : NSObject {
-    NSMutableDictionary *mHistoryPeriods;
-    int mKnownPeriodsCount;
-    int mKnownDaysCount;
-    
+@implementation ASHistoryView
+
+- (id)initWithFrame:(NSRect)frame
+{
+    if ( (self = [super initWithFrame:frame]) ) {
+        mCurrentPeriod = nil;
+	mDaysInPeriod = 0;
+	mSpacePerDay = 0;
+	
+    }
+    return self;
 }
 
--(ASHistory*)init;
+-(void)setPeriodData:(ASHistoryPeriod*)periodData
+{
+    mCurrentPeriod = [periodData retain];
+    
+    mSpacePerDay = [self frame].size.width/[mCurrentPeriod entriesCount];
+    
+    [self setNeedsDisplay:true];
+}
 
--(int)knownPeriodsCount;
--(int)knownDaysCount;
+- (void)drawRect:(NSRect)rect
+{
+    NSBezierPath *thePath;
+    NSRect usageRect;
+    int x;
+    
+    
+    [[NSColor whiteColor]set];
+    [NSBezierPath fillRect:rect];
+    
+    if( mCurrentPeriod == nil ) return;
+    
+    thePath = [[NSBezierPath alloc]init];
+    
+    [[NSColor blackColor]set];
+    [thePath setLineWidth:1.0];
+    
+    for(x=0;x<[mCurrentPeriod entriesCount];x++)
+    {
+	usageRect.origin.x = mSpacePerDay * x;
+	usageRect.origin.y = 0.0;
+	usageRect.size.width = mSpacePerDay * 0.9; //leave a little gap between
+	usageRect.size.height = ([[[mCurrentPeriod data] objectAtIndex:x]usage]/[mCurrentPeriod highestDailyUsage])*rect.size.height;
+	
+	[NSBezierPath fillRect:usageRect];
+    }
+    
+    [thePath stroke];
+    [thePath release];
+}
 
--(void)addDay:(NSString*)day periodStartDay:(NSCalendarDate*)startDay;
--(void)addHistory:(NSString*)history periodStartDay:(NSCalendarDate*)startDay;
 
--(ASHistoryDay*)historyForDay:(NSCalendarDate*)day;
--(ASHistoryPeriod*)historyForPeriod:(NSString*)period;
 
--(NSArray*)periodKeyArray;
--(NSArray*)periodDataArray;
 
 
 

@@ -38,14 +38,16 @@
 
 @interface ASHistoryPeriod : NSObject {
     NSString *mPeriodKey;
-    NSMutableArray *mDaysInPeriod;
+    NSMutableArray *mPeriodHistory;
+    NSCalendarDate *mStartDay;
+    NSCalendarDate *mEndDay;
     float mPeriodTotalUsage;
     float mPeriodAverageUsage;
     float mHighestDailyUsage;
     
 }
 
--(ASHistoryPeriod*)initFor:(NSString*)period;
+-(ASHistoryPeriod*)initFor:(NSString*)period starting:(NSCalendarDate*)startDay;
 
 -(void)add:(ASHistoryDay*)day;
 
@@ -54,9 +56,19 @@
 -(float)highestDailyUsage;
 -(float)averageUsage;
 -(int)daysInPeriod;
+-(int)entriesCount;
+-(NSCalendarDate*)startDate;
+-(NSCalendarDate*)endDate;
+-(void)setEndDate:(NSCalendarDate*)ending;
+-(NSMutableArray*)data;
+-(NSArray*)periodDataSorted;
+-(ASHistoryPeriod*)copyAsFullPeriod;
 
 -(ASHistoryDay*)historyForDay:(NSCalendarDate*)day;
 
 
 
 @end
+
+int historyPeriodValueSorting(ASHistoryPeriod* first, ASHistoryPeriod* second, void *context);
+

@@ -1,5 +1,6 @@
 {
     IBClasses = (
+        {CLASS = ASHistoryView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
         {
             ACTIONS = {
                 changeHistory = id; 
@@ -34,11 +35,12 @@
                 oDownloadSpeed = NSTextField; 
                 oExcessBilledAt = NSTextField; 
                 oFirstDate = NSTextField; 
+                oHistoryGraph = ASHistoryView; 
+                oHistoryMenu = NSPopUpButton; 
                 oLastDate = NSTextField; 
                 oLastUpdate = NSTextField; 
                 oLoginID = NSTextField; 
                 oLoginPasswd = NSTextField; 
-                oPeriodSelection = NSPopUpButton; 
                 oPeriodStartDate = NSTextField; 
                 oPrepaidMB = NSTextField; 
                 oRemoveRule = NSButton; 

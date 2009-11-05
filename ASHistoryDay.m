@@ -44,7 +44,7 @@
     ASHistoryDay *newDay = [[self alloc] init];
     newDay->mDay = [day retain];
     newDay->mUsage = usage;
-    return newDay;
+    return [newDay autorelease];
 }
 
 +(ASHistoryDay*)historyFrom:(NSString*)dayStr :(NSString*)usageStr
@@ -54,17 +54,17 @@
     // dayStr is a six digit representation of the date (yymmdd)
     // break up each piece to get the values for the date -- yy<90 = 2000+
     // not likely we will get history before 2000 - but we should handle any possibility
-    // timestamp of 1 sec before midnight and adelaide's CST timezone - +0930
-    // Should probably stay at CST to match Internodes server times??
     
     if([[dayStr substringWithRange:NSMakeRange(0,2)]intValue] < 90)
     {
-	frmtDate = [NSString stringWithFormat:@"20%@-%@-%@ 23:59:59 +0930",[dayStr substringWithRange:NSMakeRange(0,2)],[dayStr substringWithRange:NSMakeRange(2,2)],[dayStr substringWithRange:NSMakeRange(4,2)]];
+	//frmtDate = [NSString stringWithFormat:@"20%@-%@-%@ 23:59:59 +0930",[dayStr substringWithRange:NSMakeRange(0,2)],[dayStr substringWithRange:NSMakeRange(2,2)],[dayStr substringWithRange:NSMakeRange(4,2)]];
+	frmtDate = [NSString stringWithFormat:@"20%@-%@-%@",[dayStr substringWithRange:NSMakeRange(0,2)],[dayStr substringWithRange:NSMakeRange(2,2)],[dayStr substringWithRange:NSMakeRange(4,2)]];
     }else{
-	frmtDate = [NSString stringWithFormat:@"19%@-%@-%@ 23:59:59 +0930",[dayStr substringWithRange:NSMakeRange(0,2)],[dayStr substringWithRange:NSMakeRange(2,2)],[dayStr substringWithRange:NSMakeRange(4,2)]];
+	//frmtDate = [NSString stringWithFormat:@"19%@-%@-%@ 23:59:59 +0930",[dayStr substringWithRange:NSMakeRange(0,2)],[dayStr substringWithRange:NSMakeRange(2,2)],[dayStr substringWithRange:NSMakeRange(4,2)]];
+	frmtDate = [NSString stringWithFormat:@"19%@-%@-%@",[dayStr substringWithRange:NSMakeRange(0,2)],[dayStr substringWithRange:NSMakeRange(2,2)],[dayStr substringWithRange:NSMakeRange(4,2)]];
     }
     
-    calDate = [NSCalendarDate dateWithString:frmtDate calendarFormat:@"%Y-%m-%d %H:%M:%S %z"];
+    calDate = [NSCalendarDate dateWithString:frmtDate calendarFormat:@"%Y-%m-%d"];
     
     return [ASHistoryDay historyWith:calDate :[usageStr floatValue]];
 }
@@ -73,19 +73,19 @@
 {
     // period key is defined as a six digits
     // 4 for year - 2 for month -- determined from the first day of the period
+    NSString *theKey;
     
-    int dayOfHistory = [[mDay descriptionWithCalendarFormat:@"%d"]intValue];
-    NSString *tmpKey;
-    
-    if(dayOfHistory >= periodStartDay)
-	return [mDay descriptionWithCalendarFormat:@"%Y%m"];
-    else{
-	tmpKey = [NSString stringWithFormat:@"%@%i",[mDay descriptionWithCalendarFormat:@"%Y"],[[mDay descriptionWithCalendarFormat:@"%m"]intValue]-1];
+    if ([[mDay descriptionWithCalendarFormat:@"%d"]intValue] >= periodStartDay)
+    {
+	theKey = [mDay descriptionWithCalendarFormat:@"%Y%m"];
+    }else {
+	theKey = [[mDay dateByAddingYears:0 months:-1 days:0 hours:0 minutes:0 seconds:0] descriptionWithCalendarFormat:@"%Y%m"];
     }
-    return tmpKey;
+    
+    return theKey;
 }
 
--(NSCalendarDate*)day
+-(NSCalendarDate*)storedDay
 {
     return mDay;
 }
@@ -95,6 +95,11 @@
     return mUsage;
 }
 
+-(NSString*)description
+{
+    return [NSString stringWithFormat:@"%@ - %.2f",mDay,mUsage];
+}
+
 -(void) dealloc
 {
     [mDay release];
@@ -102,3 +107,11 @@
 }
 
 @end
+
+
+int historyDateSorting(ASHistoryDay* first, ASHistoryDay* second, void *context)
+{
+    return [[first storedDay]compare:[second storedDay]];
+}
+
+

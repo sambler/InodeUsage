@@ -47,7 +47,6 @@
 	mHistoryPeriods = [[NSMutableDictionary alloc]init];
 	mKnownDaysCount = 0;
 	mKnownPeriodsCount = 0;
-//	mPeriodStartDay = 0;
     }
     return self;
 }
@@ -62,25 +61,26 @@
     return mKnownDaysCount;
 }
 
--(void)addDay:(NSString*)day periodStartDay:(int)startDay
+-(void)addDay:(NSString*)day periodStartDay:(NSCalendarDate*)startDay
 {
     ASHistoryDay *dayHistory;
     ASHistoryPeriod *pHist;
     
     dayHistory = [ASHistoryDay historyFrom:[day substringWithRange:NSMakeRange(0,6)] :[day substringWithRange:NSMakeRange(7,[day length]-7)]];
     
-    if( (pHist = [mHistoryPeriods objectForKey:[dayHistory periodKey:startDay]]) )
+    if( (pHist = [mHistoryPeriods objectForKey:[dayHistory periodKey:[startDay dayOfMonth]]]) )
     {
 	[pHist add:dayHistory];
     }else{
-	pHist = [[ASHistoryPeriod alloc]initFor:[dayHistory periodKey:startDay]];
+	pHist = [[ASHistoryPeriod alloc]initFor:[dayHistory periodKey:[startDay dayOfMonth]] starting:startDay];
 	[pHist add:dayHistory];
 	[mHistoryPeriods setObject:pHist forKey:[pHist key]];
+	[pHist release];
     }
     
 }
 
--(void)addHistory:(NSString*)history periodStartDay:(int)startDay
+-(void)addHistory:(NSString*)history periodStartDay:(NSCalendarDate*)startDay
 {
     unsigned int lineStart = 0;
     unsigned int lineEnd = 0;
@@ -102,16 +102,14 @@
 -(ASHistoryDay*)historyForDay:(NSCalendarDate*)day
 {
     NSString *periodKey = [day descriptionWithCalendarFormat:@"%Y%m"];
-    ASHistoryPeriod *periodData = [self historyForPeriod:periodKey];
-    ASHistoryDay *theDay = [periodData historyForDay:day];
+    ASHistoryDay *theDay = [[self historyForPeriod:periodKey] historyForDay:day];
     
     if( theDay == nil )
     {
 	// didn't get day so try previous period
 	// the data for a day is either in the period of the same month or the one before
 	periodKey = [NSString stringWithFormat:@"%i",[periodKey intValue]-1];
-	periodData = [self historyForPeriod:periodKey];
-	theDay = [periodData historyForDay:day];
+	theDay = [[self historyForPeriod:periodKey] historyForDay:day];
     }
     return theDay;
 }
@@ -120,6 +118,19 @@
 {
     return [mHistoryPeriods objectForKey:period];
 }
+
+-(NSArray*)periodKeyArray
+{    
+    return [[mHistoryPeriods allKeys]sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+}
+
+-(NSArray*)periodDataArray
+{
+    return [[mHistoryPeriods allValues]sortedArrayUsingFunction:historyPeriodValueSorting context:nil];
+}
+
+
+
 
 
 @end
