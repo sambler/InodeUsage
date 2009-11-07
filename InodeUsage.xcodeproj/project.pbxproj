@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		341EE25D10A52B20005A90FD /* Copying.txt in Resources */ = {isa = PBXBuildFile; fileRef = 341EE25C10A52B20005A90FD /* Copying.txt */; };
-		341EE29310A52BC0005A90FD /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 341EE29210A52BC0005A90FD /* libcurl.dylib */; };
 		34A7DADF109EC3EA00FFF556 /* ASHistoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34A7DADD109EC3EA00FFF556 /* ASHistoryView.m */; };
 		34BC59AB10998237006F5082 /* ASInetUsageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34BC59AA10998237006F5082 /* ASInetUsageController.m */; };
 		34BC5A5A1099F356006F5082 /* ASHistoryDay.m in Sources */ = {isa = PBXBuildFile; fileRef = 34BC5A591099F356006F5082 /* ASHistoryDay.m */; };
@@ -45,7 +44,6 @@
 		32CA4F630368D1EE00C91783 /* InternetUsage_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InternetUsage_Prefix.pch; sourceTree = "<group>"; };
 		341EE23B10A52A95005A90FD /* ReadMe.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReadMe.txt; sourceTree = "<group>"; };
 		341EE25C10A52B20005A90FD /* Copying.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Copying.txt; sourceTree = "<group>"; };
-		341EE29210A52BC0005A90FD /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = /usr/lib/libcurl.dylib; sourceTree = "<absolute>"; };
 		34A7DADC109EC3EA00FFF556 /* ASHistoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASHistoryView.h; sourceTree = "<group>"; };
 		34A7DADD109EC3EA00FFF556 /* ASHistoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASHistoryView.m; sourceTree = "<group>"; };
 		34BC59A910998237006F5082 /* ASInetUsageController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ASInetUsageController.h; sourceTree = "<group>"; };
@@ -71,7 +69,6 @@
 			files = (
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				34D76B2C109EA756008C4DE7 /* Security.framework in Frameworks */,
-				341EE29310A52BC0005A90FD /* libcurl.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -161,7 +158,6 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				341EE29210A52BC0005A90FD /* libcurl.dylib */,
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 			);

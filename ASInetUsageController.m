@@ -39,6 +39,8 @@
 #import "ASHistoryDay.h"
 
 
+#define DEBUG_PREDOWNLOADED_HISTORY true
+
 // userdefaults string definitions
 
 NSString *ASIUSaveLoginDetails = @"Save Login Details";
@@ -48,6 +50,9 @@ NSString *ASIUDefaultLoginID = @"Default LoginID";
 
 // keychain service name - only used here
 const NSString *ASIUServiceName = @"InodeUsage";
+
+// Internodes url to retrieve the data
+const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.net/cgi-bin/padsl-usage";
 
 
 @implementation ASInetUsageController
@@ -232,28 +237,72 @@ const NSString *ASIUServiceName = @"InodeUsage";
 
 -(void)readInData
 {
-    NSBundle *myBundle;
     NSString *historydata;
+    
+#if DEBUG_PREDOWNLOADED_HISTORY
+    
+    // for testing without bothering internodes server every time through
+    // we can use a text file that lists all the history data
+    // and some pre-defined info to go with it
+    NSBundle *myBundle;
     NSStringEncoding tmpenc;
     NSError *tmperror;
     NSString *histPath;
     
-    mHistory = [[ASHistory alloc]init];
-    
     //======== start testing only
     mAccSpeed = [NSString stringWithFormat:@"24 Mbits/sec"];
     mAccISO = [NSString stringWithFormat:@"10098.845488 40000 20091126 0.00"]; // live sample - ttlDown quota rollover ???(excess cost maybe)
-    mPeriodStartDate = [[[NSCalendarDate dateWithString:[[mAccISO componentsSeparatedByString:@" "]objectAtIndex:2] calendarFormat:@"%Y%m%d"] dateByAddingYears:0 months:-1 days:0 hours:0 minutes:0 seconds:0]retain]; //we get the end date so convert to start
     
     myBundle = [NSBundle mainBundle];
     histPath = [myBundle pathForResource:@"padsl-usage" ofType:@"txt"];
-    tmperror = [[NSError alloc]init];
+    tmperror = [[[NSError alloc]init]autorelease];
     historydata = [NSString stringWithContentsOfFile:histPath usedEncoding:&tmpenc error:&tmperror];
-    
-    
-    [tmperror release];
     //======== end testing
+#else
+    // the real history retrieval code -----
+    NSPipe *fromPipe;
+    NSFileHandle *fromHandle;
+    NSTask *curlTask;
+    NSString *postFormData;
     
+    // get speed
+    curlTask = [[[NSTask alloc]init]autorelease];
+    fromPipe = [NSPipe pipe];
+    fromHandle = [fromPipe fileHandleForReading];
+    [curlTask setLaunchPath:@"/usr/bin/curl"];
+    postFormData = [NSString stringWithFormat:@"username=%@&password=%@&speed=1",[oLoginID stringValue],[oLoginPasswd stringValue]];
+    [curlTask setArguments:[NSArray arrayWithObjects:@"--silent",@"-d",postFormData,ASIUPostingURL,nil]];
+    [curlTask setStandardOutput:fromPipe];
+    [curlTask launch];
+    mAccSpeed = [[NSString alloc]initWithData:[fromHandle readDataToEndOfFile] encoding:NSUTF8StringEncoding];
+    
+    // get the 'ISO' info - ttlDown quota rollover ???(excess cost maybe)
+    curlTask = [[[NSTask alloc]init]autorelease];
+    fromPipe = [NSPipe pipe];
+    fromHandle = [fromPipe fileHandleForReading];
+    [curlTask setLaunchPath:@"/usr/bin/curl"];
+    postFormData = [NSString stringWithFormat:@"username=%@&password=%@&iso=1",[oLoginID stringValue],[oLoginPasswd stringValue]];
+    [curlTask setArguments:[NSArray arrayWithObjects:@"--silent",@"-d",postFormData,ASIUPostingURL,nil]];
+    [curlTask setStandardOutput:fromPipe];
+    [curlTask launch];
+    mAccISO = [[NSString alloc]initWithData:[fromHandle readDataToEndOfFile] encoding:NSUTF8StringEncoding];
+    
+    // get history
+    curlTask = [[[NSTask alloc]init]autorelease];
+    fromPipe = [NSPipe pipe];
+    fromHandle = [fromPipe fileHandleForReading];
+    [curlTask setLaunchPath:@"/usr/bin/curl"];
+    postFormData = [NSString stringWithFormat:@"username=%@&password=%@&history=1",[oLoginID stringValue],[oLoginPasswd stringValue]];
+    [curlTask setArguments:[NSArray arrayWithObjects:@"--silent",@"-d",postFormData,ASIUPostingURL,nil]];
+    [curlTask setStandardOutput:fromPipe];
+    [curlTask launch];
+    historydata = [[[NSString alloc]initWithData:[fromHandle readDataToEndOfFile] encoding:NSUTF8StringEncoding]autorelease];
+#endif
+    
+    mPeriodStartDate = [[[NSCalendarDate dateWithString:[[mAccISO componentsSeparatedByString:@" "]objectAtIndex:2] calendarFormat:@"%Y%m%d"] dateByAddingYears:0 months:-1 days:0 hours:0 minutes:0 seconds:0]retain]; //we get the end date so convert to start
+    
+    if( mHistory != nil ) [mHistory release];
+    mHistory = [[ASHistory alloc]init];
     [mHistory addHistory:historydata periodStartDay:mPeriodStartDate];
     [self buildHistoryMenu];
     [oHistoryMenu selectItemAtIndex:0];
@@ -377,6 +426,7 @@ const NSString *ASIUServiceName = @"InodeUsage";
 
 -(NSString*)formatAsGB:(float)inputMB
 {
+    // we show totals for entire usage history so supprt TB as well
     if( inputMB > (MB_GB_Conversion*MB_GB_Conversion) )
 	return [NSString stringWithFormat:@"%.2f TB",(inputMB/MB_GB_Conversion)/MB_GB_Conversion];
     else if( inputMB > MB_GB_Conversion )
@@ -515,3 +565,5 @@ const NSString *ASIUServiceName = @"InodeUsage";
 
 
 @end
+
+
