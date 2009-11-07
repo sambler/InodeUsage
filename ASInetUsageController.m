@@ -1,6 +1,6 @@
 /*
     ASInetUsageController.m
-    InternetUsage
+    InodeUsage
     
     Copyright (c) 2009, Shane Ambler
     All rights reserved.
@@ -47,7 +47,7 @@ NSString *ASIUAutoShowUsageMeter = @"Show Usage Meter At Startup";
 NSString *ASIUDefaultLoginID = @"Default LoginID";
 
 // keychain service name - only used here
-const NSString *ASIUServiceName = @"InternodeUsage";
+const NSString *ASIUServiceName = @"InodeUsage";
 
 
 @implementation ASInetUsageController

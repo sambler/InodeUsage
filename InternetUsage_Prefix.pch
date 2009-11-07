@@ -1,6 +1,6 @@
 /*
     InternetUsage_Prefix.pch
-    InternetUsage
+    InodeUsage
     
     Copyright (c) 2009, Shane Ambler
     All rights reserved.
@@ -34,7 +34,7 @@
     
 */
 //
-// Prefix header for all source files of the 'InternetUsage' target in the 'InternetUsage' project
+// Prefix header for all source files of the 'InodeUsage' target in the 'InodeUsage' project
 //
 
 #ifdef __OBJC__

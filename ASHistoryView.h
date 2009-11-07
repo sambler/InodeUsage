@@ -1,6 +1,6 @@
 /*
     ASHistoryView.h
-    InternetUsage
+    InodeUsage
     
     Copyright (c) 2009, Shane Ambler
     All rights reserved.
