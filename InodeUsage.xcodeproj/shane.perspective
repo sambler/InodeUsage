@@ -242,6 +242,8 @@
 			<key>Layout</key>
 			<array>
 				<dict>
+					<key>BecomeActive</key>
+					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -283,15 +285,14 @@
 								<string>29B97315FDCFA39411CA2CEA</string>
 								<string>29B97317FDCFA39411CA2CEA</string>
 								<string>19C28FACFE9D520D11CA2CBB</string>
-								<string>8D1107320486CEB800E47090</string>
 								<string>1C37FBAC04509CD000000102</string>
 								<string>1C77FABC04509CD000000102</string>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>3</integer>
-									<integer>1</integer>
+									<integer>19</integer>
+									<integer>16</integer>
 									<integer>0</integer>
 								</array>
 							</array>
@@ -313,7 +314,7 @@
 							<real>279</real>
 						</array>
 						<key>RubberWindowFrame</key>
-						<string>646 100 1243 951 0 0 1920 1058 </string>
+						<string>652 97 1243 951 0 0 1920 1058 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -324,8 +325,6 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -343,7 +342,7 @@
 										<key>_historyCapacity</key>
 										<integer>20</integer>
 										<key>bookmark</key>
-										<string>34EB365410B932F800AC757C</string>
+										<string>34EB36EF10B94CD300AC757C</string>
 										<key>history</key>
 										<array>
 											<string>341EE29510A52CB0005A90FD</string>
@@ -356,16 +355,16 @@
 											<string>3475090110A58F5100BA6536</string>
 											<string>340186DE10B8693200E307AC</string>
 											<string>340186E010B8693200E307AC</string>
-											<string>340186E110B8693200E307AC</string>
 											<string>340186E210B8693200E307AC</string>
 											<string>340186E310B8693200E307AC</string>
 											<string>340186E410B8693200E307AC</string>
 											<string>34AE54AB10A3107F007471C0</string>
-											<string>3401884210B91CD600E307AC</string>
 											<string>34EB35CB10B92AAB00AC757C</string>
 											<string>34EB364010B930DD00AC757C</string>
-											<string>34EB365110B932F800AC757C</string>
-											<string>34EB365210B932F800AC757C</string>
+											<string>34EB36B810B9494600AC757C</string>
+											<string>34EB36B910B9494600AC757C</string>
+											<string>34EB36DC10B94BAF00AC757C</string>
+											<string>34EB36ED10B94CCE00AC757C</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -405,6 +404,23 @@
 											<string>34EB364310B930DD00AC757C</string>
 											<string>34EB364410B930DD00AC757C</string>
 											<string>34EB365310B932F800AC757C</string>
+											<string>34EB366A10B9376F00AC757C</string>
+											<string>34EB369E10B93C6D00AC757C</string>
+											<string>34EB369F10B93C6D00AC757C</string>
+											<string>34EB36A610B93F8F00AC757C</string>
+											<string>34EB36A710B93F8F00AC757C</string>
+											<string>34EB36A810B93F8F00AC757C</string>
+											<string>34EB36BB10B9494600AC757C</string>
+											<string>34EB36BC10B9494600AC757C</string>
+											<string>34EB36BD10B9494600AC757C</string>
+											<string>34EB36BE10B9494600AC757C</string>
+											<string>34EB36BF10B9494600AC757C</string>
+											<string>34EB36C010B9494600AC757C</string>
+											<string>34EB36C110B9494600AC757C</string>
+											<string>34EB36C210B9494600AC757C</string>
+											<string>34EB36C310B9494600AC757C</string>
+											<string>34EB36DE10B94BAF00AC757C</string>
+											<string>34EB36DF10B94BAF00AC757C</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -420,7 +436,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {942, 800}}</string>
 								<key>RubberWindowFrame</key>
-								<string>646 100 1243 951 0 0 1920 1058 </string>
+								<string>652 97 1243 951 0 0 1920 1058 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -445,7 +461,7 @@
 										<key>Frame</key>
 										<string>{{10, 27}, {942, 78}}</string>
 										<key>RubberWindowFrame</key>
-										<string>646 100 1243 951 0 0 1920 1058 </string>
+										<string>652 97 1243 951 0 0 1920 1058 </string>
 									</dict>
 									<key>Module</key>
 									<string>XCDetailModule</string>
@@ -612,7 +628,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>340635341094867E00398554</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>ASHistoryView.m</string>
+								<string>ASInetUsageController.m</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -620,11 +636,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>340635351094867E00398554</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>ASHistoryView.m</string>
+										<string>ASInetUsageController.m</string>
 										<key>_historyCapacity</key>
 										<integer>20</integer>
 										<key>bookmark</key>
-										<string>34EB365510B932F800AC757C</string>
+										<string>34EB36F010B94CD300AC757C</string>
 										<key>history</key>
 										<array>
 											<string>34AE54DD10A311AA007471C0</string>
@@ -645,8 +661,8 @@
 											<string>340186E510B8693200E307AC</string>
 											<string>340186E110B8693200E307AC</string>
 											<string>34AE54AB10A3107F007471C0</string>
-											<string>3401883110B9199F00E307AC</string>
-											<string>34EB362C10B92F5500AC757C</string>
+											<string>34EB36D110B94AF600AC757C</string>
+											<string>34EB36EA10B94CA300AC757C</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -951,7 +967,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>280572664.53200197</real>
+	<real>280579283.37707901</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>
@@ -972,7 +988,7 @@
 		<string>/Users/shane/Projects/Internode Usage Meter/InodeUsage/InodeUsage.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
-	<string>646 100 1243 951 0 0 1920 1058 </string>
+	<string>652 97 1243 951 0 0 1920 1058 </string>
 	<key>WindowTools</key>
 	<array>
 		<dict>

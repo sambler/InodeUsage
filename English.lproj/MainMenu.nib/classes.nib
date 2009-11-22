@@ -3,6 +3,8 @@
         {CLASS = ASHistoryView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
         {
             ACTIONS = {
+                changeBorderColour = id; 
+                changeFillColour = id; 
                 changeHistory = id; 
                 changeLogin = id; 
                 changeSave = id; 

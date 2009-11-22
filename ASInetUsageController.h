@@ -114,11 +114,15 @@
 - (IBAction)viewList:(id)sender;
 - (IBAction)changeStartup:(id)sender;
 - (IBAction)changeUpdate:(id)sender;
+- (IBAction)changeBorderColour:(id)sender;
+- (IBAction)changeFillColour:(id)sender;
 - (IBAction)ruleAdd:(id)sender;
 - (IBAction)ruleRemove:(id)sender;
 - (IBAction)changeLogin:(id)sender;
 - (IBAction)changeSave:(id)sender;
 - (IBAction)update:(id)sender;
+- (IBAction)showMain:(id)sender;
+- (IBAction)showMeter:(id)sender;
 
 -(void)refreshWindow;
 -(void)readInData;

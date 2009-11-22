@@ -78,7 +78,7 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
     tmpData = [NSArchiver archivedDataWithRootObject:[NSColor colorWithDeviceRed:0.0 green:0.0 blue:1.0 alpha:1.0]];
     [factorySettings setObject:tmpData forKey:ASIUHistoryBorderColour];
     
-    tmpData = [NSArchiver archivedDataWithRootObject:[NSColor colorWithDeviceRed:0.0 green:0.0 blue:1.0 alpha:0.5]];
+    tmpData = [NSArchiver archivedDataWithRootObject:[NSColor colorWithDeviceRed:0.4 green:0.4 blue:1.0 alpha:1.0]];
     [factorySettings setObject:tmpData forKey:ASIUHistoryFillColour];
     
     // 48 = max of 4 years history to display - only affects all periods history display
@@ -112,6 +112,8 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
     } 
     [oShowMeter setState:[[NSUserDefaults standardUserDefaults]boolForKey:ASIUAutoShowUsageMeter]];
     [oUpdateOption selectItemWithTag:[[NSUserDefaults standardUserDefaults]integerForKey:ASIUAutoUpdate]];
+    [oBorderColour setColor:[NSUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults]objectForKey:ASIUHistoryBorderColour]]];
+    [oFillColour setColor:[NSUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults]objectForKey:ASIUHistoryFillColour]]];
     [oHistoryGraph updateColours];
     
 }
@@ -175,6 +177,28 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
 {
     [[NSUserDefaults standardUserDefaults]setBool:[sender state] forKey:ASIUSaveLoginDetails];
     if ([sender state]) [self changeLogin:nil];
+}
+
+- (IBAction)changeBorderColour:(id)sender
+{
+    [[NSUserDefaults standardUserDefaults]setObject:[NSArchiver archivedDataWithRootObject:[sender color]] forKey:ASIUHistoryBorderColour];
+    [oHistoryGraph updateColours];
+}
+
+- (IBAction)changeFillColour:(id)sender
+{
+    [[NSUserDefaults standardUserDefaults]setObject:[NSArchiver archivedDataWithRootObject:[sender color]] forKey:ASIUHistoryFillColour];
+    [oHistoryGraph updateColours];
+}
+
+- (IBAction)showMain:(id)sender
+{
+    
+}
+
+- (IBAction)showMeter:(id)sender
+{
+    
 }
 
 - (IBAction)update:(id)sender
