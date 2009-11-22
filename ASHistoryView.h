@@ -41,6 +41,7 @@
 @interface ASHistoryView : NSView {
     ASHistoryPeriod *mCurrentPeriod;
     int mDaysInPeriod;
+    int mDaysToShow;
     float mSpacePerDay;
     NSColor *mFillColour;
     NSColor *mBorderColour;

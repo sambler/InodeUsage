@@ -46,6 +46,7 @@
     if ( (self = [super initWithFrame:frame]) ) {
         mCurrentPeriod = nil;
 	mDaysInPeriod = 0;
+	mDaysToShow = 0;
 	mSpacePerDay = 0;
 	mFillColour = nil;
 	mBorderColour = nil;
@@ -58,7 +59,12 @@
 {
     mCurrentPeriod = [periodData retain];
     
-    mSpacePerDay = [self frame].size.width/[mCurrentPeriod entriesCount];
+    mDaysToShow = [[NSUserDefaults standardUserDefaults]integerForKey:ASIUHistoryShowLimit];
+    
+    if ( mDaysToShow > [mCurrentPeriod entriesCount] )
+	mDaysToShow = [mCurrentPeriod entriesCount];
+    
+    mSpacePerDay = [self frame].size.width/mDaysToShow;
     
     [self setNeedsDisplay:true];
 }
@@ -87,7 +93,7 @@
     [mFillColour setFill];
     [mBorderColour setStroke];
     
-    for(x=0;x<[mCurrentPeriod entriesCount];x++)
+    for(x=0;x<mDaysToShow;x++)
     {
 	usageRect.origin.x = (mSpacePerDay * x)+1;
 	usageRect.origin.y = -2.0;

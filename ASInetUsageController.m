@@ -54,6 +54,7 @@ NSString *ASIUAutoShowUsageMeter = @"Show Usage Meter At Startup";
 NSString *ASIUDefaultLoginID = @"Default LoginID";
 NSString *ASIUHistoryBorderColour = @"History Border Colour";
 NSString *ASIUHistoryFillColour = @"History Filll Colour";
+NSString *ASIUHistoryShowLimit = @"History Show Limit";
 
 // keychain service name - only used here
 const NSString *ASIUServiceName = @"InodeUsage";
@@ -79,6 +80,9 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
     
     tmpData = [NSArchiver archivedDataWithRootObject:[NSColor colorWithDeviceRed:0.0 green:0.0 blue:1.0 alpha:0.5]];
     [factorySettings setObject:tmpData forKey:ASIUHistoryFillColour];
+    
+    // 48 = max of 4 years history to display - only affects all periods history display
+    [factorySettings setObject:[NSNumber numberWithInt:48] forKey:ASIUHistoryShowLimit];
     
     [[NSUserDefaults standardUserDefaults]registerDefaults:factorySettings];
 }

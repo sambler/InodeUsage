@@ -44,3 +44,4 @@ extern NSString *ASIUAutoShowUsageMeter;
 extern NSString *ASIUDefaultLoginID;
 extern NSString *ASIUHistoryBorderColour;
 extern NSString *ASIUHistoryFillColour;
+extern NSString *ASIUHistoryShowLimit;
