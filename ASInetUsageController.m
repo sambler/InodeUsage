@@ -31,6 +31,7 @@
 ******************************************************************************
     Change History :-
     29/10/2009 - Created by Shane Ambler
+    22/11/2009 - added colour defaults for history graph by Shane Ambler
     
 */
 
@@ -39,6 +40,10 @@
 #import "ASHistoryDay.h"
 
 
+// setting this to true causes the history to be read from a text file
+// instead of from the internode server
+// setup to read file named padsl-usage.txt which should be copied into
+// the programs resources dir. - currently removed from the project build.
 #define DEBUG_PREDOWNLOADED_HISTORY true
 
 // userdefaults string definitions
@@ -47,6 +52,8 @@ NSString *ASIUSaveLoginDetails = @"Save Login Details";
 NSString *ASIUAutoUpdate = @"Auto Update Frequency";
 NSString *ASIUAutoShowUsageMeter = @"Show Usage Meter At Startup";
 NSString *ASIUDefaultLoginID = @"Default LoginID";
+NSString *ASIUHistoryBorderColour = @"History Border Colour";
+NSString *ASIUHistoryFillColour = @"History Filll Colour";
 
 // keychain service name - only used here
 const NSString *ASIUServiceName = @"InodeUsage";
@@ -60,12 +67,18 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
 +(void)initialize
 {
     NSMutableDictionary *factorySettings = [NSMutableDictionary dictionary];
+    NSData *tmpData;
     
     [factorySettings setObject:[NSNumber numberWithBool:true] forKey:ASIUSaveLoginDetails];
     //save frequency of update in hours - 0 = no auto update
     [factorySettings setObject:[NSNumber numberWithInt:0] forKey:ASIUAutoUpdate];
     [factorySettings setObject:[NSNumber numberWithBool:false] forKey:ASIUAutoShowUsageMeter];
     
+    tmpData = [NSArchiver archivedDataWithRootObject:[NSColor colorWithDeviceRed:0.0 green:0.0 blue:1.0 alpha:1.0]];
+    [factorySettings setObject:tmpData forKey:ASIUHistoryBorderColour];
+    
+    tmpData = [NSArchiver archivedDataWithRootObject:[NSColor colorWithDeviceRed:0.0 green:0.0 blue:1.0 alpha:0.5]];
+    [factorySettings setObject:tmpData forKey:ASIUHistoryFillColour];
     
     [[NSUserDefaults standardUserDefaults]registerDefaults:factorySettings];
 }
@@ -95,6 +108,7 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
     } 
     [oShowMeter setState:[[NSUserDefaults standardUserDefaults]boolForKey:ASIUAutoShowUsageMeter]];
     [oUpdateOption selectItemWithTag:[[NSUserDefaults standardUserDefaults]integerForKey:ASIUAutoUpdate]];
+    [oHistoryGraph updateColours];
     
 }
 

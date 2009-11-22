@@ -42,10 +42,13 @@
     ASHistoryPeriod *mCurrentPeriod;
     int mDaysInPeriod;
     float mSpacePerDay;
+    NSColor *mFillColour;
+    NSColor *mBorderColour;
     
 }
 
 -(void)setPeriodData:(ASHistoryPeriod*)periodData;
+-(void)updateColours;
 
 
 

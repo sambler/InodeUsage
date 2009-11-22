@@ -42,3 +42,5 @@ extern NSString *ASIUSaveLoginDetails;
 extern NSString *ASIUAutoUpdate;
 extern NSString *ASIUAutoShowUsageMeter;
 extern NSString *ASIUDefaultLoginID;
+extern NSString *ASIUHistoryBorderColour;
+extern NSString *ASIUHistoryFillColour;

@@ -31,10 +31,12 @@
 ******************************************************************************
     Change History :-
     03/11/2009 - Created by Shane Ambler
+    22/11/2009 - added cour drawing to the history graph by Shane Ambler
     
 */
 
 #import "ASHistoryView.h"
+#import "ASInternetUsageUserDefaults.h"
 
 
 @implementation ASHistoryView
@@ -45,6 +47,8 @@
         mCurrentPeriod = nil;
 	mDaysInPeriod = 0;
 	mSpacePerDay = 0;
+	mFillColour = nil;
+	mBorderColour = nil;
 	
     }
     return self;
@@ -59,35 +63,41 @@
     [self setNeedsDisplay:true];
 }
 
+-(void)updateColours
+{
+    [mBorderColour release];
+    mBorderColour = [NSUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults]objectForKey:ASIUHistoryBorderColour]];
+    [mBorderColour retain];
+    [mFillColour release];
+    mFillColour = [NSUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults]objectForKey:ASIUHistoryFillColour]];
+    [mFillColour retain];
+}
+
 - (void)drawRect:(NSRect)rect
 {
-    NSBezierPath *thePath;
     NSRect usageRect;
     int x;
-    
     
     [[NSColor whiteColor]set];
     [NSBezierPath fillRect:rect];
     
     if( mCurrentPeriod == nil ) return;
     
-    thePath = [[NSBezierPath alloc]init];
-    
-    [[NSColor blackColor]set];
-    [thePath setLineWidth:1.0];
+    [NSBezierPath setDefaultLineWidth:2.0];
+    [mFillColour setFill];
+    [mBorderColour setStroke];
     
     for(x=0;x<[mCurrentPeriod entriesCount];x++)
     {
-	usageRect.origin.x = mSpacePerDay * x;
-	usageRect.origin.y = 0.0;
-	usageRect.size.width = mSpacePerDay * 0.9; //leave a little gap between
+	usageRect.origin.x = (mSpacePerDay * x)+1;
+	usageRect.origin.y = -2.0;
+	usageRect.size.width = mSpacePerDay * 0.8; //leave a little gap between
 	usageRect.size.height = ([[[mCurrentPeriod data] objectAtIndex:x]usage]/[mCurrentPeriod highestDailyUsage])*rect.size.height;
 	
 	[NSBezierPath fillRect:usageRect];
+	[NSBezierPath strokeRect:usageRect];
     }
     
-    [thePath stroke];
-    [thePath release];
 }
 
 
