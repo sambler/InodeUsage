@@ -39,6 +39,9 @@
 
 @interface ASInetUsageController : NSObject
 {
+    IBOutlet NSWindow *oMainWindow;
+    IBOutlet NSWindow *oMeterWindow;
+    
     // always visible
     IBOutlet NSTextField *oLastUpdate;
     IBOutlet NSTextField *oShowStatus;

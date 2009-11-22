@@ -193,7 +193,7 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
 
 - (IBAction)showMain:(id)sender
 {
-    
+    [oMainWindow setIsVisible:true];
 }
 
 - (IBAction)showMeter:(id)sender

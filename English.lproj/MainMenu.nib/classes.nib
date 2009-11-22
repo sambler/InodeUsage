@@ -48,6 +48,8 @@
                 oLastUpdate = NSTextField; 
                 oLoginID = NSTextField; 
                 oLoginPasswd = NSTextField; 
+                oMainWindow = NSWindow; 
+                oMeterWindow = NSWindow; 
                 oPeriodStartDate = NSTextField; 
                 oPrepaidMB = NSTextField; 
                 oRemoveRule = NSButton; 
