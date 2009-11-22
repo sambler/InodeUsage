@@ -82,7 +82,7 @@
 - (void)drawRect:(NSRect)rect
 {
     NSRect usageRect;
-    int x;
+    int x, idxStart, idxEnd;
     
     [[NSColor whiteColor]set];
     [NSBezierPath fillRect:rect];
@@ -93,9 +93,12 @@
     [mFillColour setFill];
     [mBorderColour setStroke];
     
-    for(x=0;x<mDaysToShow;x++)
+    idxEnd = [mCurrentPeriod entriesCount];
+    idxStart = idxEnd - mDaysToShow;
+    
+    for(x=idxStart;x<idxEnd;x++)
     {
-	usageRect.origin.x = (mSpacePerDay * x)+1;
+	usageRect.origin.x = (mSpacePerDay * (x-idxStart))+1;
 	usageRect.origin.y = -2.0;
 	usageRect.size.width = mSpacePerDay * 0.8; //leave a little gap between
 	usageRect.size.height = ([[[mCurrentPeriod data] objectAtIndex:x]usage]/[mCurrentPeriod highestDailyUsage])*rect.size.height;
