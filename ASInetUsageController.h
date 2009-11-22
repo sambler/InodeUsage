@@ -136,6 +136,8 @@
 -(void)refreshWindow;
 -(void)readInData;
 
+// tap into tab changes
+- (void)tabView:(NSTabView *)tabView didSelectTabViewItem:(NSTabViewItem *)tabViewItem;
 
 //calculate figures for main window
 -(NSString*)downloadQuota;

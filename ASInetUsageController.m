@@ -115,6 +115,7 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
     [oBorderColour setColor:[NSUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults]objectForKey:ASIUHistoryBorderColour]]];
     [oFillColour setColor:[NSUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults]objectForKey:ASIUHistoryFillColour]]];
     [oHistoryGraph updateColours];
+    [oHistoryGraph setInfoField:oCurrentDate];
     // IB doesn't allow us to set show in background for utility windows
     [oMeterWindow setHidesOnDeactivate:false];
     
@@ -365,6 +366,21 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
     [self buildHistoryMenu];
     [oHistoryMenu selectItemAtIndex:0];
     [self changeHistory:[oHistoryMenu itemAtIndex:0]];
+}
+
+// delegate to enable mouse moved event in history graph
+- (void)tabView:(NSTabView *)tabView didSelectTabViewItem:(NSTabViewItem *)tabViewItem
+{
+    if ( [tabView indexOfTabViewItem:tabViewItem] == 3 )
+    {
+	[oMainWindow setAcceptsMouseMovedEvents:true];
+	[oMainWindow makeFirstResponder:oHistoryGraph];
+    }else
+    {
+	[oMainWindow setAcceptsMouseMovedEvents:false];
+	[oMainWindow setAcceptsMouseMovedEvents:false];
+    }
+
 }
 
 -(NSString*)downloadQuota

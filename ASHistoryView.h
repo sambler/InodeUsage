@@ -45,12 +45,15 @@
     float mSpacePerDay;
     NSColor *mFillColour;
     NSColor *mBorderColour;
+    NSTextField *mInfoField;
     
 }
 
 -(void)setPeriodData:(ASHistoryPeriod*)periodData;
+-(void)setInfoField:(NSTextField*)inField;
 -(void)updateColours;
 
+-(NSString*)formatAsGB:(float)inputMB;
 
 
 @end
