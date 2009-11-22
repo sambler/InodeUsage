@@ -314,7 +314,7 @@
 							<real>279</real>
 						</array>
 						<key>RubberWindowFrame</key>
-						<string>652 97 1243 951 0 0 1920 1058 </string>
+						<string>641 95 1243 951 0 0 1920 1058 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -342,7 +342,7 @@
 										<key>_historyCapacity</key>
 										<integer>20</integer>
 										<key>bookmark</key>
-										<string>34EB36EF10B94CD300AC757C</string>
+										<string>34EB377C10B9632300AC757C</string>
 										<key>history</key>
 										<array>
 											<string>341EE29510A52CB0005A90FD</string>
@@ -362,9 +362,9 @@
 											<string>34EB35CB10B92AAB00AC757C</string>
 											<string>34EB364010B930DD00AC757C</string>
 											<string>34EB36B810B9494600AC757C</string>
-											<string>34EB36B910B9494600AC757C</string>
 											<string>34EB36DC10B94BAF00AC757C</string>
-											<string>34EB36ED10B94CCE00AC757C</string>
+											<string>34EB373B10B95F4600AC757C</string>
+											<string>34EB377A10B9632200AC757C</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -421,6 +421,14 @@
 											<string>34EB36C310B9494600AC757C</string>
 											<string>34EB36DE10B94BAF00AC757C</string>
 											<string>34EB36DF10B94BAF00AC757C</string>
+											<string>34EB370C10B95B3600AC757C</string>
+											<string>34EB371410B95B7C00AC757C</string>
+											<string>34EB372710B95D4B00AC757C</string>
+											<string>34EB373210B95E6E00AC757C</string>
+											<string>34EB373310B95E6E00AC757C</string>
+											<string>34EB373410B95E6E00AC757C</string>
+											<string>34EB373510B95E6E00AC757C</string>
+											<string>34EB373D10B95F4600AC757C</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -436,7 +444,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {942, 800}}</string>
 								<key>RubberWindowFrame</key>
-								<string>652 97 1243 951 0 0 1920 1058 </string>
+								<string>641 95 1243 951 0 0 1920 1058 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -461,7 +469,7 @@
 										<key>Frame</key>
 										<string>{{10, 27}, {942, 78}}</string>
 										<key>RubberWindowFrame</key>
-										<string>652 97 1243 951 0 0 1920 1058 </string>
+										<string>641 95 1243 951 0 0 1920 1058 </string>
 									</dict>
 									<key>Module</key>
 									<string>XCDetailModule</string>
@@ -640,7 +648,7 @@
 										<key>_historyCapacity</key>
 										<integer>20</integer>
 										<key>bookmark</key>
-										<string>34EB36F010B94CD300AC757C</string>
+										<string>34EB377D10B9632300AC757C</string>
 										<key>history</key>
 										<array>
 											<string>34AE54DD10A311AA007471C0</string>
@@ -662,7 +670,7 @@
 											<string>340186E110B8693200E307AC</string>
 											<string>34AE54AB10A3107F007471C0</string>
 											<string>34EB36D110B94AF600AC757C</string>
-											<string>34EB36EA10B94CA300AC757C</string>
+											<string>34EB377710B9630500AC757C</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -967,7 +975,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>280579283.37707901</real>
+	<real>280584995.38643199</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>1</integer>
 	<key>ToolbarIsVisible</key>
@@ -988,7 +996,7 @@
 		<string>/Users/shane/Projects/Internode Usage Meter/InodeUsage/InodeUsage.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
-	<string>652 97 1243 951 0 0 1920 1058 </string>
+	<string>641 95 1243 951 0 0 1920 1058 </string>
 	<key>WindowTools</key>
 	<array>
 		<dict>

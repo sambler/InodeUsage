@@ -49,6 +49,10 @@
                 oLoginID = NSTextField; 
                 oLoginPasswd = NSTextField; 
                 oMainWindow = NSWindow; 
+                oMeterDaysRemainingLevel = NSLevelIndicator; 
+                oMeterDaysRemainingText = NSTextField; 
+                oMeterUsageRemainingLevel = NSLevelIndicator; 
+                oMeterUsageRemainingText = NSTextField; 
                 oMeterWindow = NSWindow; 
                 oPeriodStartDate = NSTextField; 
                 oPrepaidMB = NSTextField; 

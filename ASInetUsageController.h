@@ -42,6 +42,12 @@
     IBOutlet NSWindow *oMainWindow;
     IBOutlet NSWindow *oMeterWindow;
     
+    // usage meter window
+    IBOutlet NSLevelIndicator *oMeterUsageRemainingLevel;
+    IBOutlet NSTextField *oMeterUsageRemainingText;
+    IBOutlet NSLevelIndicator *oMeterDaysRemainingLevel;
+    IBOutlet NSTextField *oMeterDaysRemainingText;
+    
     // always visible
     IBOutlet NSTextField *oLastUpdate;
     IBOutlet NSTextField *oShowStatus;

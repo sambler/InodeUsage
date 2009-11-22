@@ -115,6 +115,8 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
     [oBorderColour setColor:[NSUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults]objectForKey:ASIUHistoryBorderColour]]];
     [oFillColour setColor:[NSUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults]objectForKey:ASIUHistoryFillColour]]];
     [oHistoryGraph updateColours];
+    // IB doesn't allow us to set show in background for utility windows
+    [oMeterWindow setHidesOnDeactivate:false];
     
 }
 
@@ -198,7 +200,8 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
 
 - (IBAction)showMeter:(id)sender
 {
-    
+    [oMeterWindow setIsVisible:true];
+    [self refreshWindow];
 }
 
 - (IBAction)update:(id)sender
@@ -214,6 +217,13 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
     [oTabView selectNextTabViewItem:nil];
     [oLastUpdate setStringValue:[NSString stringWithFormat:@"Last update %@",[[NSCalendarDate calendarDate]description]]];
     [oShowStatus setStringValue:@"Idle"];
+    
+    if( [oShowMeter state] )
+    {
+	// if the meter window is show on start then once updated show the meter and hide the main
+	[self showMeter:nil];
+	[oMainWindow setIsVisible:false];
+    }
 }
 
 -(void)refreshWindow
@@ -235,6 +245,12 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
 //    oDifference;//Do we need these?? -- how do we calc the diff?
 //    oDifferencePC;
 //    oDifferenceLevel;
+    
+    // usage meter window
+    [oMeterUsageRemainingLevel setFloatValue:[self quotaRemainingPC]];
+    [oMeterUsageRemainingText setStringValue:[self quotaRemaining]];
+    [oMeterDaysRemainingLevel setFloatValue:[self daysRemainingPC]];
+    [oMeterDaysRemainingText setStringValue:[self daysRemaining]];
     
     //stats tab
     [oAllowancePerDay setStringValue:[self allowancePerDay]];
