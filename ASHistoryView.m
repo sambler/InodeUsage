@@ -37,6 +37,7 @@
 
 #import "ASHistoryView.h"
 #import "ASInternetUsageUserDefaults.h"
+#import "ASIUUtilities.h"
 
 
 @implementation ASHistoryView
@@ -128,22 +129,12 @@
     {
 	idxLocation = p.x / mSpacePerDay;
 	
-	[mInfoField setStringValue:[NSString stringWithFormat:@"%@ : %@",[[[[mCurrentPeriod data] objectAtIndex:idxLocation]storedDay] descriptionWithCalendarFormat:@"%d/%m/%Y"],[self formatAsGB:[[[mCurrentPeriod data] objectAtIndex:idxLocation]usage]]]];
+	[mInfoField setStringValue:[NSString stringWithFormat:@"%@ : %@",[[[[mCurrentPeriod data] objectAtIndex:idxLocation]storedDay] descriptionWithCalendarFormat:@"%d/%m/%Y"],formatAsGB([[[mCurrentPeriod data] objectAtIndex:idxLocation]usage])]];
 	
 	// for debugging - show index used to access history entry and total entries shown
 	//[mInfoField setStringValue:[NSString stringWithFormat:@"(%i-%i) %@",idxLocation,mDaysToShow,[mInfoField stringValue]]];
     }
 }
 
--(NSString*)formatAsGB:(float)inputMB
-{
-    // we show totals for entire usage history so supprt TB as well
-    if( inputMB > (MB_GB_Conversion*MB_GB_Conversion) )
-	return [NSString stringWithFormat:@"%.2f TB",(inputMB/MB_GB_Conversion)/MB_GB_Conversion];
-    else if( inputMB > MB_GB_Conversion )
-	return [NSString stringWithFormat:@"%.2f GB",inputMB/MB_GB_Conversion];
-    else
-	return [NSString stringWithFormat:@"%.1f MB",inputMB];
-}
 
 @end

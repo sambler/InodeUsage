@@ -161,7 +161,6 @@
 -(float)currentQuota;
 -(float)currentQuotaUsed;
 -(float)statsMaxScale;
--(NSString*)formatAsGB:(float)inputMB;
 
 -(void)buildHistoryMenu;
 -(ASHistoryPeriod*)buildFullHistoryArray;

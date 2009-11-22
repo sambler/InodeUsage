@@ -38,6 +38,7 @@
 #import <Security/Security.h>
 #import "ASInetUsageController.h"
 #import "ASHistoryDay.h"
+#import "ASIUUtilities.h"
 
 
 // setting this to true causes the history to be generated instead of from the internode server
@@ -135,9 +136,9 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
 	theData = [[mHistory historyForPeriod:[NSString stringWithFormat:@"%i",[sender tag]]]copyAsFullPeriod];
     }
     
-    [oAverageForPeriod setStringValue:[self formatAsGB:[theData averageUsage]]];
-    [oTotalForPeriod setStringValue:[self formatAsGB:[theData totalUsage]]];
-    [oTopScale setStringValue:[self formatAsGB:[theData highestDailyUsage]]];
+    [oAverageForPeriod setStringValue:formatAsGB([theData averageUsage])];
+    [oTotalForPeriod setStringValue:formatAsGB([theData totalUsage])];
+    [oTopScale setStringValue:formatAsGB([theData highestDailyUsage])];
     [oFirstDate setStringValue:[[theData startDate]descriptionWithCalendarFormat:@"%d/%m/%Y"]];
     [oLastDate setStringValue:[[theData endDate]descriptionWithCalendarFormat:@"%d/%m/%Y"]];
     [oCurrentDate setStringValue:@""];
@@ -395,17 +396,17 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
 
 -(NSString*)downloadQuota
 {
-    return [self formatAsGB:[self currentQuota]];
+    return formatAsGB([self currentQuota]);
 }
 
 -(NSString*)quotaUsed
 {
-    return [self formatAsGB:[self currentQuotaUsed]];
+    return formatAsGB([self currentQuotaUsed]);
 }
 
 -(NSString*)quotaRemaining
 {
-    return [self formatAsGB:[self currentQuota] - [self currentQuotaUsed]];
+    return formatAsGB([self currentQuota] - [self currentQuotaUsed]);
 }
 
 -(float)quotaRemainingPC
@@ -425,12 +426,12 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
 
 -(NSString*)allowancePerDay
 {
-    return [self formatAsGB:[self currentQuota]/[self currentPeriodDays]];
+    return formatAsGB([self currentQuota]/[self currentPeriodDays]);
 }
 
 -(NSString*)currentAverage
 {
-    return [self formatAsGB:[self currentQuotaUsed]/([self currentPeriodDays]-[self currentPeriodDaysLeft])];
+    return formatAsGB([self currentQuotaUsed]/([self currentPeriodDays]-[self currentPeriodDaysLeft]));
 }
 
 -(float)currentAveragePC
@@ -440,7 +441,7 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
 
 -(NSString*)averageRemaining
 {
-    return [self formatAsGB:([self currentQuota]-[self currentQuotaUsed])/[self currentPeriodDaysLeft]];
+    return formatAsGB(([self currentQuota]-[self currentQuotaUsed])/[self currentPeriodDaysLeft]);
 }
 
 -(float)averageRemainingPC
@@ -454,7 +455,7 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
     if(usageData == nil)
 	return @"?? MB";
     
-    return [self formatAsGB:[usageData usage]];
+    return formatAsGB([usageData usage]);
 }
 
 -(float)todaysUsagePC
@@ -469,7 +470,7 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
 
 -(NSString*)scaleForLevels
 {
-    return [self formatAsGB:[self statsMaxScale]];
+    return formatAsGB([self statsMaxScale]);
 }
 
 // common use functions
@@ -506,17 +507,6 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
 {
     // the daily allowance level sits in the middle so max scale is (daily allowance * 2)
     return [self currentQuota]/[self currentPeriodDays] * 2;
-}
-
--(NSString*)formatAsGB:(float)inputMB
-{
-    // we show totals for entire usage history so supprt TB as well
-    if( inputMB > (MB_GB_Conversion*MB_GB_Conversion) )
-	return [NSString stringWithFormat:@"%.2f TB",(inputMB/MB_GB_Conversion)/MB_GB_Conversion];
-    else if( inputMB > MB_GB_Conversion )
-	return [NSString stringWithFormat:@"%.2f GB",inputMB/MB_GB_Conversion];
-    else
-	return [NSString stringWithFormat:@"%.1f MB",inputMB];
 }
 
 //build history menu

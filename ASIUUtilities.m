@@ -1,5 +1,5 @@
 /*
-    ASHistoryView.h
+    ASIUUtilities.m
     InodeUsage
     
     Copyright (c) 2009, Shane Ambler
@@ -30,28 +30,21 @@
 /*
 ******************************************************************************
     Change History :-
-    03/11/2009 - Created by Shane Ambler
+    23/11/2009 - Created by Shane Ambler
     
 */
 
+#import "ASIUUtilities.h"
 
-#import "ASHistoryPeriod.h"
 
-
-@interface ASHistoryView : NSView {
-    ASHistoryPeriod *mCurrentPeriod;
-    int mDaysInPeriod;
-    int mDaysToShow;
-    float mSpacePerDay;
-    NSColor *mFillColour;
-    NSColor *mBorderColour;
-    NSTextField *mInfoField;
-    
+NSString* formatAsGB(float inputMB)
+{
+    // we show totals for entire usage history so supprt TB as well
+    if( inputMB >= (MB_GB_Conversion*MB_GB_Conversion) )
+	return [NSString stringWithFormat:@"%.2f TB",(inputMB/MB_GB_Conversion)/MB_GB_Conversion];
+    else if( inputMB >= MB_GB_Conversion )
+	return [NSString stringWithFormat:@"%.2f GB",inputMB/MB_GB_Conversion];
+    else
+	return [NSString stringWithFormat:@"%.1f MB",inputMB];
 }
 
--(void)setPeriodData:(ASHistoryPeriod*)periodData;
--(void)setInfoField:(NSTextField*)inField;
--(void)updateColours;
-
-
-@end

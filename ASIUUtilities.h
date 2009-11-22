@@ -1,5 +1,5 @@
 /*
-    ASHistoryView.h
+    ASIUUtilities.h
     InodeUsage
     
     Copyright (c) 2009, Shane Ambler
@@ -30,28 +30,10 @@
 /*
 ******************************************************************************
     Change History :-
-    03/11/2009 - Created by Shane Ambler
+    23/11/2009 - Created by Shane Ambler
     
 */
 
 
-#import "ASHistoryPeriod.h"
+NSString* formatAsGB(float inputMB);
 
-
-@interface ASHistoryView : NSView {
-    ASHistoryPeriod *mCurrentPeriod;
-    int mDaysInPeriod;
-    int mDaysToShow;
-    float mSpacePerDay;
-    NSColor *mFillColour;
-    NSColor *mBorderColour;
-    NSTextField *mInfoField;
-    
-}
-
--(void)setPeriodData:(ASHistoryPeriod*)periodData;
--(void)setInfoField:(NSTextField*)inField;
--(void)updateColours;
-
-
-@end

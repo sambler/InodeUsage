@@ -14,6 +14,7 @@
 		34BC5A8F1099F740006F5082 /* ASHistoryPeriod.m in Sources */ = {isa = PBXBuildFile; fileRef = 34BC5A8E1099F740006F5082 /* ASHistoryPeriod.m */; };
 		34BC5AF0109A03F1006F5082 /* ASHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 34BC5AEF109A03F1006F5082 /* ASHistory.m */; };
 		34D76B2C109EA756008C4DE7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34D76B2B109EA756008C4DE7 /* Security.framework */; };
+		34EB3C5210B9DA2A00AC757C /* ASIUUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 34EB3C5010B9DA2A00AC757C /* ASIUUtilities.m */; };
 		8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
@@ -56,6 +57,8 @@
 		34BC5AF1109A0450006F5082 /* HistoryClassInteractions.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HistoryClassInteractions.txt; sourceTree = "<group>"; };
 		34D7691C109D63F4008C4DE7 /* ASInternetUsageUserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASInternetUsageUserDefaults.h; sourceTree = "<group>"; };
 		34D76B2B109EA756008C4DE7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = /System/Library/Frameworks/Security.framework; sourceTree = "<absolute>"; };
+		34EB3C4F10B9DA2A00AC757C /* ASIUUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIUUtilities.h; sourceTree = "<group>"; };
+		34EB3C5010B9DA2A00AC757C /* ASIUUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIUUtilities.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* InodeUsage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InodeUsage.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -135,6 +138,8 @@
 				32CA4F630368D1EE00C91783 /* InternetUsage_Prefix.pch */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
 				34D7691C109D63F4008C4DE7 /* ASInternetUsageUserDefaults.h */,
+				34EB3C4F10B9DA2A00AC757C /* ASIUUtilities.h */,
+				34EB3C5010B9DA2A00AC757C /* ASIUUtilities.m */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
@@ -222,6 +227,7 @@
 				34BC5A8F1099F740006F5082 /* ASHistoryPeriod.m in Sources */,
 				34BC5AF0109A03F1006F5082 /* ASHistory.m in Sources */,
 				34A7DADF109EC3EA00FFF556 /* ASHistoryView.m in Sources */,
+				34EB3C5210B9DA2A00AC757C /* ASIUUtilities.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
