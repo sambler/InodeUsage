@@ -229,7 +229,7 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
     // account tab
     [oExcessBilledAt setStringValue:@"$0.00 per MB (not implemented)"];  //Do we need this??? - Business acc maybe
     [oDownloadSpeed setStringValue:mAccSpeed];
-    [oPeriodStartDate setStringValue:[mPeriodStartDate descriptionWithCalendarFormat:@"%d/%m/%Y"]];
+    [oPeriodStartDate setStringValue:[[mPeriodStartDate dateByAddingYears:0 months:1 days:0 hours:0 minutes:0 seconds:0] descriptionWithCalendarFormat:@"%d/%m/%Y"]];
     
     //usage tab
     [oPrepaidMB setStringValue:[self downloadQuota]];
@@ -261,8 +261,9 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
     [oTodaysUsageLevel setFloatValue:[self todaysUsagePC]];
     // we adjust todays warning levels to fit with usage remaining
     float avgRemain = [self averageRemainingPC];
-    [oTodaysUsageLevel setWarningValue:avgRemain+10];
-    [oTodaysUsageLevel setCriticalValue:avgRemain+((100-avgRemain)/2)]; //half way between here and the max scale???
+    avgRemain = avgRemain>90 ? 99 : avgRemain+10;
+    [oTodaysUsageLevel setWarningValue:avgRemain];
+    [oTodaysUsageLevel setCriticalValue:avgRemain+((100-avgRemain)/2)]; //half way between warn and the max???
     //---
     [oShowScale setStringValue:[self scaleForLevels]];
     
@@ -306,7 +307,9 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
     mAccSpeed = [NSString stringWithFormat:@"24 Mbits/sec"];
     
     // the 'ISO' info - ttlDown quota rollover ???(excess cost maybe)
-    mAccISO = [NSString stringWithFormat:@"25000 80000 %@ 0.00",[[NSCalendarDate calendarDate]descriptionWithCalendarFormat:@"%Y%m%d"]];
+    // the download used (first figure) can throw out the average use when at the beginning of a period
+    // adjust this rollover date for testing
+    mAccISO = [NSString stringWithFormat:@"25000 80000 %@ 0.00",[[[NSCalendarDate calendarDate]dateByAddingYears:0 months:1 days:0 hours:0 minutes:0 seconds:0] descriptionWithCalendarFormat:@"%Y%m%d"]];
     
     // generate 825 days of history
     // days usage is 100MB * dayofmonth
@@ -317,10 +320,10 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
     // 31 day month - 49.6 GB
     
     historydata = [NSString stringWithFormat:@""]; // start with an empty string to prevent the {null} entry at the start
-    for(x=1;x<825;x++)
+    for(x=0;x<825;x++)
     {
 	tmpDate = [NSCalendarDate calendarDate];
-	tmpDate = [tmpDate dateByAddingYears:0 months:0 days:x-825 hours:0 minutes:0 seconds:0];
+	tmpDate = [tmpDate dateByAddingYears:0 months:0 days:x-824 hours:0 minutes:0 seconds:0];
 	tmpUsage = 100.0*[tmpDate dayOfMonth];
 	historydata = [NSString stringWithFormat:@"%@%@ %f\n",historydata,[tmpDate descriptionWithCalendarFormat:@"%y%m%d"],tmpUsage];
     }
@@ -365,7 +368,7 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
     historydata = [[[NSString alloc]initWithData:[fromHandle readDataToEndOfFile] encoding:NSUTF8StringEncoding]autorelease];
 #endif
     
-    mPeriodStartDate = [[[NSCalendarDate dateWithString:[[mAccISO componentsSeparatedByString:@" "]objectAtIndex:2] calendarFormat:@"%Y%m%d"] dateByAddingYears:0 months:-1 days:0 hours:0 minutes:0 seconds:0]retain]; //we get the end date so convert to start
+    mPeriodStartDate = [[[NSCalendarDate dateWithString:[NSString stringWithFormat:@"%@ 00:00:00",[[mAccISO componentsSeparatedByString:@" "]objectAtIndex:2]] calendarFormat:@"%Y%m%d %H:%M:%S"] dateByAddingYears:0 months:-1 days:0 hours:0 minutes:0 seconds:0]retain]; //we get the end date so convert to start
     
     if( mHistory != nil ) [mHistory release];
     mHistory = [[ASHistory alloc]init];
@@ -580,11 +583,21 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
     NSArray *periodList;
     NSEnumerator *listEnumerator;
     ASHistoryPeriod *curItem;
-    ASHistoryPeriod *tmpHistory = [[[ASHistoryPeriod alloc]initFor:@"200001" starting:[NSCalendarDate dateWithYear:2000 month:01 day:01 hour:0 minute:0 second:0 timeZone:[NSTimeZone timeZoneWithName:@"CST"]]]autorelease];
+    NSCalendarDate *startDate;
+    ASHistoryPeriod *tmpHistory;
     ASHistoryDay *tmpDay;
     NSCalendarDate *tmpEndDate;
     
     periodList = [mHistory periodDataArray];
+    
+    if( [[NSUserDefaults standardUserDefaults]integerForKey:ASIUHistoryShowLimit] > [periodList count] )
+    {
+	startDate = [mPeriodStartDate dateByAddingYears:0 months:-([periodList count]-1) days:0 hours:0 minutes:0 seconds:0];
+    }else {
+	startDate = [mPeriodStartDate dateByAddingYears:0 months:-([[NSUserDefaults standardUserDefaults]integerForKey:ASIUHistoryShowLimit]-1) days:0 hours:0 minutes:0 seconds:0];
+    }
+    tmpHistory = [[[ASHistoryPeriod alloc]initFor:[startDate descriptionWithCalendarFormat:@"%Y%m"] starting:startDate]autorelease];
+    
     listEnumerator = [periodList objectEnumerator];
     while( (curItem = [listEnumerator nextObject]) )
     {
