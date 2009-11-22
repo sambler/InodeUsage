@@ -40,11 +40,8 @@
 #import "ASHistoryDay.h"
 
 
-// setting this to true causes the history to be read from a text file
-// instead of from the internode server
-// setup to read file named padsl-usage.txt which should be copied into
-// the programs resources dir. - currently removed from the project build.
-#define DEBUG_PREDOWNLOADED_HISTORY true
+// setting this to true causes the history to be generated instead of from the internode server
+#define DEBUG_GENERATED_HISTORY true
 
 // userdefaults string definitions
 
@@ -298,25 +295,35 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
 {
     NSString *historydata;
     
-#if DEBUG_PREDOWNLOADED_HISTORY
+#if DEBUG_GENERATED_HISTORY
     
     // for testing without bothering internodes server every time through
-    // we can use a text file that lists all the history data
-    // and some pre-defined info to go with it
-    NSBundle *myBundle;
-    NSStringEncoding tmpenc;
-    NSError *tmperror;
-    NSString *histPath;
+    // we can generate the history data and some pre-defined info to go with it
+    NSCalendarDate *tmpDate;
+    int x;
+    float tmpUsage;
     
-    //======== start testing only
     mAccSpeed = [NSString stringWithFormat:@"24 Mbits/sec"];
-    mAccISO = [NSString stringWithFormat:@"10098.845488 40000 20091126 0.00"]; // live sample - ttlDown quota rollover ???(excess cost maybe)
     
-    myBundle = [NSBundle mainBundle];
-    histPath = [myBundle pathForResource:@"padsl-usage" ofType:@"txt"];
-    tmperror = [[[NSError alloc]init]autorelease];
-    historydata = [NSString stringWithContentsOfFile:histPath usedEncoding:&tmpenc error:&tmperror];
-    //======== end testing
+    // the 'ISO' info - ttlDown quota rollover ???(excess cost maybe)
+    mAccISO = [NSString stringWithFormat:@"25000 80000 %@ 0.00",[[NSCalendarDate calendarDate]descriptionWithCalendarFormat:@"%Y%m%d"]];
+    
+    // generate 825 days of history
+    // days usage is 100MB * dayofmonth
+    // months usage totals are as follows -
+    // 28 day month - 40.6 GB
+    // 29 day month - 43.5 GB
+    // 30 day month - 46.5 GB
+    // 31 day month - 49.6 GB
+    
+    historydata = [NSString stringWithFormat:@""]; // start with an empty string to prevent the {null} entry at the start
+    for(x=1;x<825;x++)
+    {
+	tmpDate = [NSCalendarDate calendarDate];
+	tmpDate = [tmpDate dateByAddingYears:0 months:0 days:x-825 hours:0 minutes:0 seconds:0];
+	tmpUsage = 100.0*[tmpDate dayOfMonth];
+	historydata = [NSString stringWithFormat:@"%@%@ %f\n",historydata,[tmpDate descriptionWithCalendarFormat:@"%y%m%d"],tmpUsage];
+    }
 #else
     // the real history retrieval code -----
     NSPipe *fromPipe;
