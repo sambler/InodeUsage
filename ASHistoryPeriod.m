@@ -53,6 +53,15 @@
     return self;
 }
 
+- (void) dealloc {
+    [mPeriodKey release];
+    [mPeriodHistory release];
+    [mStartDay release];
+    [mEndDay release];
+    
+    [super dealloc];
+}
+
 -(void)add:(ASHistoryDay*)day
 {
     [mPeriodHistory addObject:day];

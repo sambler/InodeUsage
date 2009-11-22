@@ -85,6 +85,15 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
     [[NSUserDefaults standardUserDefaults]registerDefaults:factorySettings];
 }
 
+- (void) dealloc
+{
+    [mAccSpeed release];
+    [mAccISO release];
+    [mPeriodStartDate release];
+    [mHistory release];
+    
+    [super dealloc];
+}
 
 -(void)awakeFromNib
 {

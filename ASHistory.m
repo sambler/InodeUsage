@@ -51,6 +51,12 @@
     return self;
 }
 
+- (void) dealloc {
+    [mHistoryPeriods release];
+    
+    [super dealloc];
+}
+
 -(int)knownPeriodsCount
 {
     return mKnownPeriodsCount;

@@ -56,6 +56,15 @@
     return self;
 }
 
+- (void) dealloc {
+    [mCurrentPeriod release];
+    [mFillColour release];
+    [mBorderColour release];
+    [mInfoField release];
+    
+    [super dealloc];
+}
+
 -(void)setPeriodData:(ASHistoryPeriod*)periodData
 {
     mCurrentPeriod = [periodData retain];
