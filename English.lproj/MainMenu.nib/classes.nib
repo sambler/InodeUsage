@@ -10,7 +10,10 @@
                 changeUpdate = id; 
                 ruleAdd = id; 
                 ruleRemove = id; 
+                showMain = id; 
+                showMeter = id; 
                 update = id; 
+                viewList = id; 
             }; 
             CLASS = ASInetUsageController; 
             LANGUAGE = ObjC; 
@@ -23,6 +26,7 @@
                 oAverageForPeriod = NSTextField; 
                 oAverageRemaining = NSTextField; 
                 oAverageRemainingLevel = NSLevelIndicator; 
+                oBorderColour = NSColorWell; 
                 oCurrentAverage = NSTextField; 
                 oCurrentAverageLevel = NSLevelIndicator; 
                 oCurrentDate = NSTextField; 
@@ -34,6 +38,7 @@
                 oDifferencePC = NSTextField; 
                 oDownloadSpeed = NSTextField; 
                 oExcessBilledAt = NSTextField; 
+                oFillColour = NSColorWell; 
                 oFirstDate = NSTextField; 
                 oHistoryGraph = ASHistoryView; 
                 oHistoryMenu = NSPopUpButton; 
@@ -60,6 +65,7 @@
                 oUsageRemaining = NSTextField; 
                 oUsageRemainingLevel = NSLevelIndicator; 
                 oUsageRemainingPC = NSTextField; 
+                oViewAsTable = NSButton; 
             }; 
             SUPERCLASS = NSObject; 
         }, 

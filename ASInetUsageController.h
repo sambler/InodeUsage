@@ -97,6 +97,8 @@
     //Prefs Panel
     IBOutlet NSPopUpButton *oUpdateOption;
     IBOutlet NSButton *oShowMeter;
+    IBOutlet NSColorWell *oBorderColour;
+    IBOutlet NSColorWell *oFillColour;
     
     //About Panel
     IBOutlet NSImageView *oAboutIcon;
