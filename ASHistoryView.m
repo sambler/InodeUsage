@@ -138,7 +138,7 @@
     {
 	idxLocation = p.x / mSpacePerDay;
 	
-	[mInfoField setStringValue:[NSString stringWithFormat:@"%@ : %@",[[[[mCurrentPeriod data] objectAtIndex:idxLocation]storedDay] descriptionWithCalendarFormat:@"%d/%m/%Y"],formatAsGB([[[mCurrentPeriod data] objectAtIndex:idxLocation]usage])]];
+	[mInfoField setStringValue:[NSString stringWithFormat:@"%@ : %@",[[[[mCurrentPeriod data] objectAtIndex:idxLocation]storedDay] descriptionWithCalendarFormat:@"%a %d/%m/%Y"],formatAsGB([[[mCurrentPeriod data] objectAtIndex:idxLocation]usage])]];
 	
 	// for debugging - show index used to access history entry and total entries shown
 	//[mInfoField setStringValue:[NSString stringWithFormat:@"(%i-%i) %@",idxLocation,mDaysToShow,[mInfoField stringValue]]];
