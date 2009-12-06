@@ -37,7 +37,7 @@
 #import "ASHistory.h"
 #import "ASHistoryView.h"
 
-@interface ASInetUsageController : NSObject
+@interface ASInetUsageController : NSWindowController
 {
     IBOutlet NSWindow *oMainWindow;
     IBOutlet NSWindow *oMeterWindow;
@@ -170,7 +170,7 @@
 -(void)fillLoginDetails;
 -(void)saveLoginDetails;
 
--(void)setupTimer;
+-(void)setupTimer:(bool)inUpdateNow;
 -(void)timerFireMethod:(NSTimer*)inTimer;
 
 

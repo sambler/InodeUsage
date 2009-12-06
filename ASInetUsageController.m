@@ -120,10 +120,11 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
     [oShowMeter setState:[[NSUserDefaults standardUserDefaults]boolForKey:ASIUAutoShowUsageMeter]];
     [oUpdateOption selectItemWithTag:[[NSUserDefaults standardUserDefaults]integerForKey:ASIUAutoUpdate]];
     if( [oUpdateOption selectedTag] >0 )
-        [self setupTimer];
-    
-    if( [oUpdateOption selectedTag] == 0 || [oShowMeter state] == 0 )
-        [oMainWindow setIsVisible:true];
+    {
+        [self setupTimer:false];
+        [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:false];
+        // we queue up the timer then add a single shot timer to update after the window is shown
+    }
     
     [oBorderColour setColor:[NSUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults]objectForKey:ASIUHistoryBorderColour]]];
     [oFillColour setColor:[NSUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults]objectForKey:ASIUHistoryFillColour]]];
@@ -134,7 +135,7 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
     
 }
 
--(void)setupTimer
+-(void)setupTimer:(bool)inUpdateNow
 {
     if( [oUpdateOption selectedTag] == 0 )
         return;
@@ -144,13 +145,13 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
     
     mUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:(60*60*[oUpdateOption selectedTag]) target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:true];
     
-    [self update:nil];
+    if( inUpdateNow )
+        [self update:nil];
 }
 
 -(void)timerFireMethod:(NSTimer*)inTimer
 {
-    if( inTimer == mUpdateTimer )
-        [self update:nil];
+    [self update:nil];
 }
 
 - (IBAction)changeHistory:(id)sender
@@ -200,7 +201,7 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
         mUpdateTimer = nil;
     }
     else
-        [self setupTimer];
+        [self setupTimer:true];
 }
 
 - (IBAction)ruleAdd:(id)sender
