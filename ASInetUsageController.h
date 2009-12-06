@@ -118,6 +118,8 @@
     NSCalendarDate *mPeriodStartDate;
     ASHistory *mHistory;
     
+    NSTimer *mUpdateTimer;
+    
 }
 - (IBAction)changeHistory:(id)sender;
 - (IBAction)viewList:(id)sender;
@@ -168,6 +170,8 @@
 -(void)fillLoginDetails;
 -(void)saveLoginDetails;
 
+-(void)setupTimer;
+-(void)timerFireMethod:(NSTimer*)inTimer;
 
 
 @end

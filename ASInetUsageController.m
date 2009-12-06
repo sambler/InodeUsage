@@ -119,6 +119,9 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
     } 
     [oShowMeter setState:[[NSUserDefaults standardUserDefaults]boolForKey:ASIUAutoShowUsageMeter]];
     [oUpdateOption selectItemWithTag:[[NSUserDefaults standardUserDefaults]integerForKey:ASIUAutoUpdate]];
+    if( [oUpdateOption selectedTag] >0 )
+        [self setupTimer];
+    
     [oBorderColour setColor:[NSUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults]objectForKey:ASIUHistoryBorderColour]]];
     [oFillColour setColor:[NSUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults]objectForKey:ASIUHistoryFillColour]]];
     [oHistoryGraph updateColours];
@@ -126,6 +129,25 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
     // IB doesn't allow us to set show in background for utility windows
     [oMeterWindow setHidesOnDeactivate:false];
     
+}
+
+-(void)setupTimer
+{
+    if( [oUpdateOption selectedTag] == 0 )
+        return;
+    
+    if( mUpdateTimer )
+        [mUpdateTimer invalidate];
+    
+    mUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:(60*60*[oUpdateOption selectedTag]) target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:true];
+    
+    [self update:nil];
+}
+
+-(void)timerFireMethod:(NSTimer*)inTimer
+{
+    if( inTimer == mUpdateTimer )
+        [self update:nil];
 }
 
 - (IBAction)changeHistory:(id)sender
@@ -168,6 +190,14 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
 - (IBAction)changeUpdate:(id)sender
 {
     [[NSUserDefaults standardUserDefaults]setInteger:[sender selectedTag] forKey:ASIUAutoUpdate];
+    
+    if( [sender selectedTag] == 0 )
+    {
+        [mUpdateTimer invalidate];
+        mUpdateTimer = nil;
+    }
+    else
+        [self setupTimer];
 }
 
 - (IBAction)ruleAdd:(id)sender
