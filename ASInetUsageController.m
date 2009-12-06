@@ -122,6 +122,9 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
     if( [oUpdateOption selectedTag] >0 )
         [self setupTimer];
     
+    if( [oUpdateOption selectedTag] == 0 || [oShowMeter state] == 0 )
+        [oMainWindow setIsVisible:true];
+    
     [oBorderColour setColor:[NSUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults]objectForKey:ASIUHistoryBorderColour]]];
     [oFillColour setColor:[NSUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults]objectForKey:ASIUHistoryFillColour]]];
     [oHistoryGraph updateColours];
@@ -256,7 +259,7 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
     [oLastUpdate setStringValue:[NSString stringWithFormat:@"Last update %@",[[NSCalendarDate calendarDate]description]]];
     [oShowStatus setStringValue:@"Idle"];
     
-    if( [oShowMeter state] )
+    if( (sender != oUpdateButton) && [oShowMeter state] )
     {
 	// if the meter window is show on start then once updated show the meter and hide the main
 	[self showMeter:nil];
