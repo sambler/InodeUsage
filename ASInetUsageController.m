@@ -249,6 +249,7 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
 - (IBAction)update:(id)sender
 {
     [oShowStatus setStringValue:@"Updating"];
+    [oShowStatus display];
     
     [self readInData];
     
