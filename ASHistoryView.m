@@ -49,6 +49,7 @@
 	mDaysInPeriod = 0;
 	mDaysToShow = 0;
 	mSpacePerDay = 0;
+        mAverageUsage = 0;
 	mFillColour = nil;
 	mBorderColour = nil;
 	
@@ -65,9 +66,10 @@
     [super dealloc];
 }
 
--(void)setPeriodData:(ASHistoryPeriod*)periodData
+-(void)setPeriodData:(ASHistoryPeriod*)periodData withAverage:(float)inAverage
 {
     mCurrentPeriod = [periodData retain];
+    mAverageUsage = inAverage;
     
     mDaysToShow = [[NSUserDefaults standardUserDefaults]integerForKey:ASIUHistoryShowLimit];
     
@@ -123,6 +125,10 @@
 	[NSBezierPath strokeRect:usageRect];
     }
     
+    // draw the average line
+    float avgLinePos = ((mAverageUsage/[mCurrentPeriod highestDailyUsage])*rect.size.height) - 2.0;
+    [NSBezierPath setDefaultLineWidth:1.0];
+    [NSBezierPath strokeLineFromPoint:NSMakePoint(0,avgLinePos) toPoint:NSMakePoint([self bounds].size.width,avgLinePos)];
 }
 
 -(void)mouseMoved:(NSEvent*)theEvent

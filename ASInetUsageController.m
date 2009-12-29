@@ -178,7 +178,7 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
     [oLastDate setStringValue:[[theData endDate]descriptionWithCalendarFormat:@"%d/%m/%Y"]];
     [oCurrentDate setStringValue:@""];
     
-    [oHistoryGraph setPeriodData:theData];
+    [oHistoryGraph setPeriodData:theData withAverage:[theData averageUsage]];
     [oHistoryGraph setNeedsDisplay:true];
 }
 

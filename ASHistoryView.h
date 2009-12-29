@@ -43,13 +43,14 @@
     int mDaysInPeriod;
     int mDaysToShow;
     float mSpacePerDay;
+    float mAverageUsage;
     NSColor *mFillColour;
     NSColor *mBorderColour;
     NSTextField *mInfoField;
     
 }
 
--(void)setPeriodData:(ASHistoryPeriod*)periodData;
+-(void)setPeriodData:(ASHistoryPeriod*)periodData withAverage:(float)inAverage;
 -(void)setInfoField:(NSTextField*)inField;
 -(void)updateColours;
 
