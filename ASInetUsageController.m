@@ -468,6 +468,16 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
     return ([self currentPeriodDaysLeft]/[self currentPeriodDays])*100;
 }
 
+-(float)daysUsed
+{
+    float usedUp = [self currentPeriodDays]-[self currentPeriodDaysLeft];
+    
+    if( usedUp < 1 ) // at the beginning of the first day we get a small figure - also prevent div by zero
+        usedUp = 1;
+    
+    return usedUp;
+}
+
 -(NSString*)allowancePerDay
 {
     return formatAsGB([self currentQuota]/[self currentPeriodDays]);
@@ -475,12 +485,12 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
 
 -(NSString*)currentAverage
 {
-    return formatAsGB([self currentQuotaUsed]/([self currentPeriodDays]-[self currentPeriodDaysLeft]));
+    return formatAsGB([self currentQuotaUsed]/[self daysUsed]);
 }
 
 -(float)currentAveragePC
 {
-    return (([self currentQuotaUsed]/([self currentPeriodDays]-[self currentPeriodDaysLeft]))/[self statsMaxScale])*100;
+    return (([self currentQuotaUsed]/[self daysUsed])/[self statsMaxScale])*100;
 }
 
 -(NSString*)averageRemaining
@@ -523,7 +533,7 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
 {
     int daysInPeriod;
     
-    [mPeriodStartDate years:NULL months:NULL days:&daysInPeriod hours:NULL minutes:NULL seconds:NULL sinceDate:[mPeriodStartDate dateByAddingYears:0 months:-1 days:0 hours:0 minutes:0 seconds:0]];
+    [[mPeriodStartDate dateByAddingYears:0 months:1 days:0 hours:0 minutes:0 seconds:0]years:NULL months:NULL days:&daysInPeriod hours:NULL minutes:NULL seconds:NULL sinceDate:mPeriodStartDate];
     
     return daysInPeriod;
 }

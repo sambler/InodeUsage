@@ -148,6 +148,7 @@
 -(float)quotaRemainingPC;
 -(NSString*)daysRemaining;
 -(float)daysRemainingPC;
+-(float)daysUsed;
 -(NSString*)allowancePerDay;
 -(NSString*)currentAverage;
 -(float)currentAveragePC;
