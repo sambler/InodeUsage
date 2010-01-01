@@ -42,7 +42,7 @@
 #endif
 
 
-#define VERS @"v0.2"
+#define VERS @"v0.3a"
 
 // use consumer style metric conversions
 #define MB_GB_Conversion 1000
