@@ -114,7 +114,11 @@
     {
 	// didn't get day so try previous period
 	// the data for a day is either in the period of the same month or the one before
-	periodKey = [NSString stringWithFormat:@"%i",[periodKey intValue]-1];
+        if( [day monthOfYear] == 1 )
+            periodKey = [NSString stringWithFormat:@"%i12",[day yearOfCommonEra]-1];
+        else
+            periodKey = [NSString stringWithFormat:@"%i",[periodKey intValue]-1];
+        
 	theDay = [[self historyForPeriod:periodKey] historyForDay:day];
     }
     return theDay;
