@@ -43,12 +43,12 @@
 {
     if( (self = [super init]) )
     {
-	mPeriodKey = [period retain];
-	mPeriodHistory = [[NSMutableArray alloc]init];
-	mStartDay = [[NSCalendarDate dateWithString:[NSString stringWithFormat:@"%@%@",period,[startDay descriptionWithCalendarFormat:@"%d"]] calendarFormat:@"%Y%m%d"]retain];
-	mPeriodTotalUsage = 0.0;
-	mPeriodAverageUsage = 0.0;
-	mHighestDailyUsage = 0.0;
+        mPeriodKey = [period retain];
+        mPeriodHistory = [[NSMutableArray alloc]init];
+        mStartDay = [[NSCalendarDate dateWithString:[NSString stringWithFormat:@"%@%@",period,[startDay descriptionWithCalendarFormat:@"%d"]] calendarFormat:@"%Y%m%d"]retain];
+        mPeriodTotalUsage = 0.0;
+        mPeriodAverageUsage = 0.0;
+        mHighestDailyUsage = 0.0;
     }
     return self;
 }
@@ -118,7 +118,7 @@
 -(NSCalendarDate*)endDate
 {
     if(mEndDay == nil)
-	return [mStartDay dateByAddingYears:0 months:1 days:-1 hours:0 minutes:0 seconds:0];
+        return [mStartDay dateByAddingYears:0 months:1 days:-1 hours:0 minutes:0 seconds:0];
     
     return mEndDay;
 }
@@ -152,17 +152,17 @@
     
     for (x = 0; x < daysToLoop; x++)
     {
-	tmpDate = [mStartDay dateByAddingYears:0 months:0 days:x hours:0 minutes:0 seconds:0]; //the date we expect at this array index
-	if( x < [tmpPeriod->mPeriodHistory count] )
-	    [[[tmpPeriod->mPeriodHistory objectAtIndex:x]storedDay] years:nil months:nil days:&daysDiff hours:nil minutes:nil seconds:nil sinceDate:tmpDate];
-	else
-	    daysDiff = 1;//make the following add a day
-	
-	if(daysDiff != 0)
-	{
-	    newDay = [ASHistoryDay historyWith:tmpDate :0.0];
-	    [tmpPeriod->mPeriodHistory insertObject:newDay atIndex:x];
-	}
+        tmpDate = [mStartDay dateByAddingYears:0 months:0 days:x hours:0 minutes:0 seconds:0]; //the date we expect at this array index
+        if( x < [tmpPeriod->mPeriodHistory count] )
+            [[[tmpPeriod->mPeriodHistory objectAtIndex:x]storedDay] years:nil months:nil days:&daysDiff hours:nil minutes:nil seconds:nil sinceDate:tmpDate];
+        else
+            daysDiff = 1;//make the following add a day
+        
+        if(daysDiff != 0)
+        {
+            newDay = [ASHistoryDay historyWith:tmpDate :0.0];
+            [tmpPeriod->mPeriodHistory insertObject:newDay atIndex:x];
+        }
     }
     
     return tmpPeriod;
@@ -176,10 +176,10 @@
     
     for (x = 0; x < [mPeriodHistory count]; x++)
     {
-	theDayData = [mPeriodHistory objectAtIndex:x];
-	[[theDayData storedDay] years:nil months:nil days:&daysDifference hours:nil minutes:nil seconds:nil sinceDate:day];
-	if( daysDifference == 0 )
-	    return theDayData;
+        theDayData = [mPeriodHistory objectAtIndex:x];
+        [[theDayData storedDay] years:nil months:nil days:&daysDifference hours:nil minutes:nil seconds:nil sinceDate:day];
+        if( daysDifference == 0 )
+            return theDayData;
     }
     
     return nil;

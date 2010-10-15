@@ -57,11 +57,11 @@
     
     if([[dayStr substringWithRange:NSMakeRange(0,2)]intValue] < 90)
     {
-	//frmtDate = [NSString stringWithFormat:@"20%@-%@-%@ 23:59:59 +0930",[dayStr substringWithRange:NSMakeRange(0,2)],[dayStr substringWithRange:NSMakeRange(2,2)],[dayStr substringWithRange:NSMakeRange(4,2)]];
-	frmtDate = [NSString stringWithFormat:@"20%@-%@-%@",[dayStr substringWithRange:NSMakeRange(0,2)],[dayStr substringWithRange:NSMakeRange(2,2)],[dayStr substringWithRange:NSMakeRange(4,2)]];
+        //frmtDate = [NSString stringWithFormat:@"20%@-%@-%@ 23:59:59 +0930",[dayStr substringWithRange:NSMakeRange(0,2)],[dayStr substringWithRange:NSMakeRange(2,2)],[dayStr substringWithRange:NSMakeRange(4,2)]];
+        frmtDate = [NSString stringWithFormat:@"20%@-%@-%@",[dayStr substringWithRange:NSMakeRange(0,2)],[dayStr substringWithRange:NSMakeRange(2,2)],[dayStr substringWithRange:NSMakeRange(4,2)]];
     }else{
-	//frmtDate = [NSString stringWithFormat:@"19%@-%@-%@ 23:59:59 +0930",[dayStr substringWithRange:NSMakeRange(0,2)],[dayStr substringWithRange:NSMakeRange(2,2)],[dayStr substringWithRange:NSMakeRange(4,2)]];
-	frmtDate = [NSString stringWithFormat:@"19%@-%@-%@",[dayStr substringWithRange:NSMakeRange(0,2)],[dayStr substringWithRange:NSMakeRange(2,2)],[dayStr substringWithRange:NSMakeRange(4,2)]];
+        //frmtDate = [NSString stringWithFormat:@"19%@-%@-%@ 23:59:59 +0930",[dayStr substringWithRange:NSMakeRange(0,2)],[dayStr substringWithRange:NSMakeRange(2,2)],[dayStr substringWithRange:NSMakeRange(4,2)]];
+        frmtDate = [NSString stringWithFormat:@"19%@-%@-%@",[dayStr substringWithRange:NSMakeRange(0,2)],[dayStr substringWithRange:NSMakeRange(2,2)],[dayStr substringWithRange:NSMakeRange(4,2)]];
     }
     
     calDate = [NSCalendarDate dateWithString:frmtDate calendarFormat:@"%Y-%m-%d"];
@@ -77,9 +77,11 @@
     
     if ([[mDay descriptionWithCalendarFormat:@"%d"]intValue] >= periodStartDay)
     {
-	theKey = [mDay descriptionWithCalendarFormat:@"%Y%m"];
-    }else {
-	theKey = [[mDay dateByAddingYears:0 months:-1 days:0 hours:0 minutes:0 seconds:0] descriptionWithCalendarFormat:@"%Y%m"];
+        theKey = [mDay descriptionWithCalendarFormat:@"%Y%m"];
+    }
+    else
+    {
+        theKey = [[mDay dateByAddingYears:0 months:-1 days:0 hours:0 minutes:0 seconds:0] descriptionWithCalendarFormat:@"%Y%m"];
     }
     
     return theKey;

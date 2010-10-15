@@ -41,10 +41,10 @@ NSString* formatAsGB(float inputMB)
 {
     // we show totals for entire usage history so supprt TB as well
     if( inputMB >= (MB_GB_Conversion*MB_GB_Conversion) )
-	return [NSString stringWithFormat:@"%.2f TB",(inputMB/MB_GB_Conversion)/MB_GB_Conversion];
+        return [NSString stringWithFormat:@"%.2f TB",(inputMB/MB_GB_Conversion)/MB_GB_Conversion];
     else if( inputMB >= MB_GB_Conversion )
-	return [NSString stringWithFormat:@"%.2f GB",inputMB/MB_GB_Conversion];
+        return [NSString stringWithFormat:@"%.2f GB",inputMB/MB_GB_Conversion];
     else
-	return [NSString stringWithFormat:@"%.1f MB",inputMB];
+        return [NSString stringWithFormat:@"%.1f MB",inputMB];
 }
 

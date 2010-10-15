@@ -42,7 +42,7 @@
 
 
 // setting this to true causes the history to be generated instead of from the internode server
-#define DEBUG_GENERATED_HISTORY true
+#define DEBUG_GENERATED_HISTORY false
 
 // userdefaults string definitions
 
@@ -114,8 +114,8 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
     [oSaveLogin setState:[[NSUserDefaults standardUserDefaults]boolForKey:ASIUSaveLoginDetails]];
     if( [oSaveLogin state] && ([[[NSUserDefaults standardUserDefaults]stringForKey:ASIUDefaultLoginID]length] > 0) )
     {
-	[oLoginID setStringValue:[[NSUserDefaults standardUserDefaults]stringForKey:ASIUDefaultLoginID]];
-	[self fillLoginDetails];
+        [oLoginID setStringValue:[[NSUserDefaults standardUserDefaults]stringForKey:ASIUDefaultLoginID]];
+        [self fillLoginDetails];
     } 
     [oShowMeter setState:[[NSUserDefaults standardUserDefaults]boolForKey:ASIUAutoShowUsageMeter]];
     [oUpdateOption selectItemWithTag:[[NSUserDefaults standardUserDefaults]integerForKey:ASIUAutoUpdate]];
@@ -160,15 +160,15 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
     
     if ([sender tag] == 10) //current period
     {
-	theData = [[mHistory historyForPeriod:[mPeriodStartDate descriptionWithCalendarFormat:@"%Y%m"]]copyAsFullPeriod];
+        theData = [[mHistory historyForPeriod:[mPeriodStartDate descriptionWithCalendarFormat:@"%Y%m"]]copyAsFullPeriod];
     }
     else if ([sender tag] == 20)//period totals
     {
-	theData = [self buildFullHistoryArray];
+        theData = [self buildFullHistoryArray];
     }
     else // sender tag determines the period
     {
-	theData = [[mHistory historyForPeriod:[NSString stringWithFormat:@"%i",[sender tag]]]copyAsFullPeriod];
+        theData = [[mHistory historyForPeriod:[NSString stringWithFormat:@"%i",[sender tag]]]copyAsFullPeriod];
     }
     
     [oAverageForPeriod setStringValue:formatAsGB([theData averageUsage])];
@@ -255,7 +255,7 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
     
     [self refreshWindow];
     if( [oTabView indexOfTabViewItem:[oTabView selectedTabViewItem]] > 0 )
-	[oTabView selectFirstTabViewItem:nil];
+        [oTabView selectFirstTabViewItem:nil];
 	
     [oTabView selectNextTabViewItem:nil];
     [oLastUpdate setStringValue:[NSString stringWithFormat:@"Last update %@",[[NSCalendarDate calendarDate]description]]];
@@ -263,9 +263,9 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
     
     if( (sender != oUpdateButton) && [oShowMeter state] )
     {
-	// if the meter window is show on start then once updated show the meter and hide the main
-	[self showMeter:nil];
-	[oMainWindow setIsVisible:false];
+        // if the meter window is show on start then once updated show the meter and hide the main
+        [self showMeter:nil];
+        [oMainWindow setIsVisible:false];
     }
 }
 
@@ -354,7 +354,7 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
     // the 'ISO' info - ttlDown quota rollover ???(excess cost maybe)
     // the download used (first figure) can throw out the average use when at the beginning of a period
     // adjust this rollover date for testing
-    mAccISO = [NSString stringWithFormat:@"25000 80000 %@ 0.00",[[[NSCalendarDate calendarDate]dateByAddingYears:0 months:1 days:0 hours:0 minutes:0 seconds:0] descriptionWithCalendarFormat:@"%Y%m%d"]];
+    mAccISO = [NSString stringWithFormat:@"25000 80000 %@ 0.00",[[[NSCalendarDate calendarDate]dateByAddingYears:0 months:1 days:-3 hours:0 minutes:0 seconds:0] descriptionWithCalendarFormat:@"%Y%m%d"]];
     
     // generate 825 days of history
     // days usage is 100MB * dayofmonth
@@ -367,10 +367,10 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
     historydata = [NSString stringWithFormat:@""]; // start with an empty string to prevent the {null} entry at the start
     for(x=0;x<825;x++)
     {
-	tmpDate = [NSCalendarDate calendarDate];
-	tmpDate = [tmpDate dateByAddingYears:0 months:0 days:x-824 hours:0 minutes:0 seconds:0];
-	tmpUsage = 100.0*[tmpDate dayOfMonth];
-	historydata = [NSString stringWithFormat:@"%@%@ %f\n",historydata,[tmpDate descriptionWithCalendarFormat:@"%y%m%d"],tmpUsage];
+        tmpDate = [NSCalendarDate calendarDate];
+        tmpDate = [tmpDate dateByAddingYears:0 months:0 days:x-824 hours:0 minutes:0 seconds:0];
+        tmpUsage = 100.0*[tmpDate dayOfMonth];
+        historydata = [NSString stringWithFormat:@"%@%@ %f\n",historydata,[tmpDate descriptionWithCalendarFormat:@"%y%m%d"],tmpUsage];
     }
 #else
     // the real history retrieval code -----
@@ -413,7 +413,10 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
     historydata = [[[NSString alloc]initWithData:[fromHandle readDataToEndOfFile] encoding:NSUTF8StringEncoding]autorelease];
 #endif
     
-    mPeriodStartDate = [[[NSCalendarDate dateWithString:[NSString stringWithFormat:@"%@ 00:00:00",[[mAccISO componentsSeparatedByString:@" "]objectAtIndex:2]] calendarFormat:@"%Y%m%d %H:%M:%S"] dateByAddingYears:0 months:-1 days:0 hours:0 minutes:0 seconds:0]retain]; //we get the end date so convert to start
+    if( [mAccISO length] )
+        mPeriodStartDate = [[[NSCalendarDate dateWithString:[NSString stringWithFormat:@"%@ 00:00:00",[[mAccISO componentsSeparatedByString:@" "]objectAtIndex:2]] calendarFormat:@"%Y%m%d %H:%M:%S"] dateByAddingYears:0 months:-1 days:0 hours:0 minutes:0 seconds:0]retain]; //we get the end date so convert to start
+    else
+        mPeriodStartDate = [[NSCalendarDate alloc]init];
     
     if( mHistory != nil ) [mHistory release];
     mHistory = [[ASHistory alloc]init];
@@ -428,12 +431,13 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
 {
     if ( [tabView indexOfTabViewItem:tabViewItem] == 3 )
     {
-	[oMainWindow setAcceptsMouseMovedEvents:true];
-	[oMainWindow makeFirstResponder:oHistoryGraph];
-    }else
+        [oMainWindow setAcceptsMouseMovedEvents:true];
+        [oMainWindow makeFirstResponder:oHistoryGraph];
+    }
+    else
     {
-	[oMainWindow setAcceptsMouseMovedEvents:false];
-	[oMainWindow setAcceptsMouseMovedEvents:false];
+        [oMainWindow setAcceptsMouseMovedEvents:false];
+        [oMainWindow setAcceptsMouseMovedEvents:false];
     }
 
 }
@@ -507,7 +511,7 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
     ASHistoryDay *usageData = [mHistory historyForDay:[NSCalendarDate calendarDate]];
     
     if(usageData == nil)
-	return @"?? MB";
+        return @"?? MB";
     
     return formatAsGB([usageData usage]);
 }
@@ -517,7 +521,7 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
     ASHistoryDay *usageData = [mHistory historyForDay:[NSCalendarDate calendarDate]];
     
     if(usageData == nil)
-	return 0.0;
+        return 0.0;
     
     return ([usageData usage]/[self statsMaxScale])*100;
 }
@@ -602,19 +606,19 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
     listEnumerator = [periodList reverseObjectEnumerator];
     while( (curKey = [listEnumerator nextObject]) )
     {
-	NSString *curTitle;
-	NSCalendarDate *curDate;
-	
-	curDate = [NSCalendarDate dateWithString:[NSString stringWithFormat:@"%@%i",curKey,[mPeriodStartDate dayOfMonth]] calendarFormat:@"%Y%m%d"];
-	
-	curTitle = [NSString stringWithFormat:@"%@...%@",[curDate descriptionWithCalendarFormat:@"%d/%m/%y"],[[curDate dateByAddingYears:0 months:1 days:-1 hours:0 minutes:0 seconds:0]descriptionWithCalendarFormat:@"%d/%m/%y"]];
-	
-	theItem = [[NSMenuItem alloc]initWithTitle:curTitle action:@selector(changeHistory:) keyEquivalent:@""];
-	[theItem setTag:[curKey intValue]];
-	[theItem setEnabled:true];
-	[theItem setTarget:self];
-	[theMenu addItem:theItem];
-	[theItem release];
+        NSString *curTitle;
+        NSCalendarDate *curDate;
+        
+        curDate = [NSCalendarDate dateWithString:[NSString stringWithFormat:@"%@%i",curKey,[mPeriodStartDate dayOfMonth]] calendarFormat:@"%Y%m%d"];
+        
+        curTitle = [NSString stringWithFormat:@"%@...%@",[curDate descriptionWithCalendarFormat:@"%d/%m/%y"],[[curDate dateByAddingYears:0 months:1 days:-1 hours:0 minutes:0 seconds:0]descriptionWithCalendarFormat:@"%d/%m/%y"]];
+        
+        theItem = [[NSMenuItem alloc]initWithTitle:curTitle action:@selector(changeHistory:) keyEquivalent:@""];
+        [theItem setTag:[curKey intValue]];
+        [theItem setEnabled:true];
+        [theItem setTarget:self];
+        [theMenu addItem:theItem];
+        [theItem release];
     }
 }
 
@@ -636,18 +640,20 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
     
     if( [[NSUserDefaults standardUserDefaults]integerForKey:ASIUHistoryShowLimit] > [periodList count] )
     {
-	startDate = [mPeriodStartDate dateByAddingYears:0 months:-([periodList count]-1) days:0 hours:0 minutes:0 seconds:0];
-    }else {
-	startDate = [mPeriodStartDate dateByAddingYears:0 months:-([[NSUserDefaults standardUserDefaults]integerForKey:ASIUHistoryShowLimit]-1) days:0 hours:0 minutes:0 seconds:0];
+        startDate = [mPeriodStartDate dateByAddingYears:0 months:-([periodList count]-1) days:0 hours:0 minutes:0 seconds:0];
+    }
+    else
+    {
+        startDate = [mPeriodStartDate dateByAddingYears:0 months:-([[NSUserDefaults standardUserDefaults]integerForKey:ASIUHistoryShowLimit]-1) days:0 hours:0 minutes:0 seconds:0];
     }
     tmpHistory = [[[ASHistoryPeriod alloc]initFor:[startDate descriptionWithCalendarFormat:@"%Y%m"] starting:startDate]autorelease];
     
     listEnumerator = [periodList objectEnumerator];
     while( (curItem = [listEnumerator nextObject]) )
     {
-	tmpDay = [ASHistoryDay historyWith:[curItem startDate] :[curItem totalUsage]];
-	[tmpHistory add:tmpDay];
-	tmpEndDate = [curItem startDate];
+        tmpDay = [ASHistoryDay historyWith:[curItem startDate] :[curItem totalUsage]];
+        [tmpHistory add:tmpDay];
+        tmpEndDate = [curItem startDate];
     }
     [tmpHistory setEndDate:tmpEndDate];
     return tmpHistory;
@@ -688,15 +694,15 @@ const NSString *ASIUPostingURL = @"https://customer-webtools-api.internode.on.ne
     
     if(status == errSecDuplicateItem)
     {
-	UInt32 passwdLength;
-	void *passwd;
-	SecKeychainItemRef itemRef = nil;
-	
-	SecKeychainFindGenericPassword(NULL,[ASIUServiceName length],[ASIUServiceName cString],[[oLoginID stringValue] length],[[oLoginID stringValue] cString],&passwdLength,&passwd,&itemRef);
-	
-	SecKeychainItemFreeContent(NULL,passwd);
-	
-	SecKeychainItemModifyAttributesAndData(itemRef,NULL,[[oLoginPasswd stringValue]length],[[oLoginPasswd stringValue]cString]);
+        UInt32 passwdLength;
+        void *passwd;
+        SecKeychainItemRef itemRef = nil;
+        
+        SecKeychainFindGenericPassword(NULL,[ASIUServiceName length],[ASIUServiceName cString],[[oLoginID stringValue] length],[[oLoginID stringValue] cString],&passwdLength,&passwd,&itemRef);
+        
+        SecKeychainItemFreeContent(NULL,passwd);
+        
+        SecKeychainItemModifyAttributesAndData(itemRef,NULL,[[oLoginPasswd stringValue]length],[[oLoginPasswd stringValue]cString]);
     }
 }
 

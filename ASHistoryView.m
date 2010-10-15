@@ -46,13 +46,13 @@
 {
     if ( (self = [super initWithFrame:frame]) ) {
         mCurrentPeriod = nil;
-	mDaysInPeriod = 0;
-	mDaysToShow = 0;
-	mSpacePerDay = 0;
+        mDaysInPeriod = 0;
+        mDaysToShow = 0;
+        mSpacePerDay = 0;
         mAverageUsage = 0;
-	mFillColour = nil;
-	mBorderColour = nil;
-	
+        mFillColour = nil;
+        mBorderColour = nil;
+        
     }
     return self;
 }
@@ -74,7 +74,7 @@
     mDaysToShow = [[NSUserDefaults standardUserDefaults]integerForKey:ASIUHistoryShowLimit];
     
     if ( mDaysToShow > [mCurrentPeriod entriesCount] )
-	mDaysToShow = [mCurrentPeriod entriesCount];
+        mDaysToShow = [mCurrentPeriod entriesCount];
     
     mSpacePerDay = [self frame].size.width/mDaysToShow;
     
@@ -116,13 +116,13 @@
     
     for(x=idxStart;x<idxEnd;x++)
     {
-	usageRect.origin.x = (mSpacePerDay * (x-idxStart))+1;
-	usageRect.origin.y = -2.0;
-	usageRect.size.width = mSpacePerDay * 0.8; //leave a little gap between
-	usageRect.size.height = ([[[mCurrentPeriod data] objectAtIndex:x]usage]/[mCurrentPeriod highestDailyUsage])*rect.size.height;
-	
-	[NSBezierPath fillRect:usageRect];
-	[NSBezierPath strokeRect:usageRect];
+        usageRect.origin.x = (mSpacePerDay * (x-idxStart))+1;
+        usageRect.origin.y = -2.0;
+        usageRect.size.width = mSpacePerDay * 0.8; //leave a little gap between
+        usageRect.size.height = ([[[mCurrentPeriod data] objectAtIndex:x]usage]/[mCurrentPeriod highestDailyUsage])*rect.size.height;
+        
+        [NSBezierPath fillRect:usageRect];
+        [NSBezierPath strokeRect:usageRect];
     }
     
     // draw the average line
@@ -139,15 +139,15 @@
     p = [self convertPoint:[theEvent locationInWindow] fromView:nil];
     
     if( ! NSPointInRect(p,[self bounds]) )
-	[mInfoField setStringValue:@""];
+        [mInfoField setStringValue:@""];
     else
     {
-	idxLocation = (p.x / mSpacePerDay) + ([[mCurrentPeriod data]count]-mDaysToShow);
-	
-	[mInfoField setStringValue:[NSString stringWithFormat:@"%@ : %@",[[[[mCurrentPeriod data] objectAtIndex:idxLocation]storedDay] descriptionWithCalendarFormat:@"%a %d/%m/%Y"],formatAsGB([[[mCurrentPeriod data] objectAtIndex:idxLocation]usage])]];
-	
-	// for debugging - show index used to access history entry and total entries shown
-	//[mInfoField setStringValue:[NSString stringWithFormat:@"(%i-%i-%i) %@",idxLocation,[[mCurrentPeriod data]count],mDaysToShow,[mInfoField stringValue]]];
+        idxLocation = (p.x / mSpacePerDay) + ([[mCurrentPeriod data]count]-mDaysToShow);
+        
+        [mInfoField setStringValue:[NSString stringWithFormat:@"%@ : %@",[[[[mCurrentPeriod data] objectAtIndex:idxLocation]storedDay] descriptionWithCalendarFormat:@"%a %d/%m/%Y"],formatAsGB([[[mCurrentPeriod data] objectAtIndex:idxLocation]usage])]];
+        
+        // for debugging - show index used to access history entry and total entries shown
+        //[mInfoField setStringValue:[NSString stringWithFormat:@"(%i-%i-%i) %@",idxLocation,[[mCurrentPeriod data]count],mDaysToShow,[mInfoField stringValue]]];
     }
 }
 

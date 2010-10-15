@@ -44,9 +44,9 @@
 {
     if ( (self = [super init]) )
     {
-	mHistoryPeriods = [[NSMutableDictionary alloc]init];
-	mKnownDaysCount = 0;
-	mKnownPeriodsCount = 0;
+        mHistoryPeriods = [[NSMutableDictionary alloc]init];
+        mKnownDaysCount = 0;
+        mKnownPeriodsCount = 0;
     }
     return self;
 }
@@ -76,12 +76,14 @@
     
     if( (pHist = [mHistoryPeriods objectForKey:[dayHistory periodKey:[startDay dayOfMonth]]]) )
     {
-	[pHist add:dayHistory];
-    }else{
-	pHist = [[ASHistoryPeriod alloc]initFor:[dayHistory periodKey:[startDay dayOfMonth]] starting:startDay];
-	[pHist add:dayHistory];
-	[mHistoryPeriods setObject:pHist forKey:[pHist key]];
-	[pHist release];
+        [pHist add:dayHistory];
+    }
+    else
+    {
+        pHist = [[ASHistoryPeriod alloc]initFor:[dayHistory periodKey:[startDay dayOfMonth]] starting:startDay];
+        [pHist add:dayHistory];
+        [mHistoryPeriods setObject:pHist forKey:[pHist key]];
+        [pHist release];
     }
     
 }
@@ -98,10 +100,10 @@
     
     while(lineTarget>1)
     {
-	[history getLineStart:&lineStart end:&lineEnd contentsEnd:&contEnd forRange:NSMakeRange(lineTarget,2)];
-	theLine = [history substringWithRange:NSMakeRange(lineStart,lineEnd-lineStart)];
-	[self addDay:theLine periodStartDay:startDay];
-	lineTarget = lineStart - 5;
+        [history getLineStart:&lineStart end:&lineEnd contentsEnd:&contEnd forRange:NSMakeRange(lineTarget,2)];
+        theLine = [history substringWithRange:NSMakeRange(lineStart,lineEnd-lineStart)];
+        [self addDay:theLine periodStartDay:startDay];
+        lineTarget = lineStart - 5;
     }
 }
 
@@ -112,14 +114,14 @@
     
     if( theDay == nil )
     {
-	// didn't get day so try previous period
-	// the data for a day is either in the period of the same month or the one before
+        // didn't get day so try previous period
+        // the data for a day is either in the period of the same month or the one before
         if( [day monthOfYear] == 1 )
             periodKey = [NSString stringWithFormat:@"%i12",[day yearOfCommonEra]-1];
         else
             periodKey = [NSString stringWithFormat:@"%i",[periodKey intValue]-1];
         
-	theDay = [[self historyForPeriod:periodKey] historyForDay:day];
+        theDay = [[self historyForPeriod:periodKey] historyForDay:day];
     }
     return theDay;
 }
